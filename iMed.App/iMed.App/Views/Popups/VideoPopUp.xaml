@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.Popups.VideoPopUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms"
+    xmlns:models="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit">
+    <ContentView.Content>
+        <Grid>
+            <views:MediaElement
+                x:Name="MediaElement"
+                Aspect="AspectFit"
+                ShowsPlaybackControls="True" />
+            <WebView x:Name="webView" />
+            <Frame
+                x:Name="indicatorFrame"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                VerticalOptions="Center">
+                <StackLayout>
+                    <ActivityIndicator IsRunning="True" />
+                    <Label Text="منتظر بمانید ..." />
+                </StackLayout>
+            </Frame>
+            <Button
+                Margin="8"
+                Padding="0"
+                BackgroundColor="{StaticResource Red}"
+                Clicked="CloseButton_OnClicked"
+                CornerRadius="30"
+                FontFamily="{StaticResource MaterialFontFamily}"
+                FontSize="30"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                Text="{x:Static models:MaterialIconFont.CloseCircle}"
+                TextColor="White"
+                VerticalOptions="Start"
+                WidthRequest="35" />
+            <Button
+                Margin="50,8"
+                Padding="0"
+                BackgroundColor="{StaticResource Gray-700}"
+                Clicked="FullScreenButton_OnClicked"
+                CornerRadius="30"
+                FontFamily="{StaticResource MaterialFontFamily}"
+                FontSize="30"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                IsVisible="False"
+                Text="{x:Static models:MaterialIconFont.Fullscreen}"
+                TextColor="White"
+                VerticalOptions="Start"
+                WidthRequest="35" />
+
+            <Button
+                Margin="90,8"
+                Padding="0"
+                BackgroundColor="{StaticResource Gray-700}"
+                Clicked="PlaySpeedButton_OnClicked"
+                CornerRadius="30"
+                FontFamily="{StaticResource MaterialFontFamily}"
+                FontSize="30"
+                HeightRequest="35"
+                HorizontalOptions="Start"
+                IsVisible="False"
+                Text="{x:Static models:MaterialIconFont.PlaySpeed}"
+                TextColor="White"
+                VerticalOptions="Start"
+                WidthRequest="35" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

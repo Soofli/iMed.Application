@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.CoursePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controllers="clr-namespace:iMed.App.Views.Controllers"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:itemTemplates="clr-namespace:iMed.App.Views.ItemTemplates;assembly=iMed.App"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:renders="clr-namespace:iMed.App.Renders;assembly=iMed.App"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:xForms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+    x:Name="Page"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{StaticResource Gray-200}"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="5*,7*">
+        <Grid>
+            <Frame Padding="0" HasShadow="False">
+                <Grid>
+                    <forms:CachedImage Aspect="AspectFill" Source="{Binding Path=PageDto.Course.ImageFileName, Converter={StaticResource ImageUrlConverter}}" />
+                    <Frame
+                        Padding="15,15,15,55"
+                        BackgroundColor="#60000000"
+                        HasShadow="False">
+                        <Grid RowDefinitions="Auto,*,Auto">
+
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <StackLayout>
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Medium"
+                                        Text="{Binding PageDto.Course.Name}"
+                                        TextColor="White" />
+                                    <Label
+                                        Margin="0,-8"
+                                        Text="{Binding PageDto.Course.Teacher}"
+                                        TextColor="White" />
+
+                                    <xForms:SfRating
+                                        Margin="0,10"
+                                        HorizontalOptions="Start"
+                                        ItemCount="5"
+                                        ItemSize="25"
+                                        ItemSpacing="5"
+                                        Precision="Exact"
+                                        ReadOnly="True"
+                                        VerticalOptions="End"
+                                        Value="{Binding Path=PageDto.RateAvg}">
+
+                                        <xForms:SfRating.RatingSettings>
+                                            <xForms:SfRatingSettings
+                                                RatedFill="#f39c12"
+                                                RatedStroke="Transparent"
+                                                RatedStrokeWidth="3"
+                                                UnRatedFill="#45ffffff"
+                                                UnRatedStroke="LightGray"
+                                                UnRatedStrokeWidth="2" />
+                                        </xForms:SfRating.RatingSettings>
+                                    </xForms:SfRating>
+                                </StackLayout>
+                            </Grid>
+                            <Button
+                                Margin="5,-35,5,5"
+                                Padding="0"
+                                BackgroundColor="#90333333"
+                                Command="{Binding BackNavigationCommand}"
+                                CornerRadius="30"
+                                FontFamily="{StaticResource MaterialFontFamily}"
+                                FontSize="28"
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                                TextColor="White"
+                                VerticalOptions="Center"
+                                WidthRequest="40" />
+                            <Button
+                                Grid.Row="1"
+                                Margin="0,-35,0,0"
+                                BackgroundColor="Transparent"
+                                Command="{Binding PlayFreeVideoCommand}"
+                                FontFamily="{StaticResource MaterialFontFamily}"
+                                FontSize="90"
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding HasFreeVideo}"
+                                Opacity="0.6"
+                                Text="{x:Static model:MaterialIconFont.PlayCircleOutline}"
+                                TextColor="#ffffff"
+                                VerticalOptions="Center" />
+                            <Grid Grid.Row="2" ColumnDefinitions="*,*">
+                                <Frame
+                                    Padding="5"
+                                    Background="{StaticResource PrimaryColor}"
+                                    CornerRadius="25"
+                                    IsVisible="{Binding NotPurchaseVisible}">
+                                    <Grid ColumnDefinitions="Auto,*">
+                                        <Frame Padding="7,5" CornerRadius="25">
+                                            <Label
+                                                FontFamily="{StaticResource MaterialFontFamily}"
+                                                FontSize="18"
+                                                Text="{x:Static model:MaterialIconFont.Shopping}"
+                                                TextColor="{StaticResource PrimaryDarkColor}" />
+                                        </Frame>
+                                        <Label
+                                            Grid.Column="1"
+                                            Margin="0,-4,-10,0"
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Body"
+                                            HorizontalOptions="Center"
+                                            Text="خرید ویدیو"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="PurchaseTapGestureRecognizer_OnTapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame
+                                    Grid.Column="1"
+                                    Padding="15,8"
+                                    Background="{StaticResource AccentColor}"
+                                    CornerRadius="25"
+                                    IsVisible="{Binding NotPurchaseVisible}">
+                                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Body"
+                                            IsVisible="{Binding PageDto.Course.IsFree, Converter={StaticResource Key=InvertedBoolConverter}}"
+                                            Text="{Binding PageDto.Course.Price, StringFormat='{0:N0}'}"
+                                            TextColor="White" />
+                                        <Label
+                                            FontFamily="{StaticResource Shabname}"
+                                            FontSize="Caption"
+                                            IsVisible="{Binding PageDto.Course.IsFree, Converter={StaticResource Key=InvertedBoolConverter}}"
+                                            Text="تومان"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Body"
+                                            IsVisible="{Binding PageDto.Course.IsFree}"
+                                            Text="رایـــگان"
+                                            TextColor="White" />
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </Frame>
+        </Grid>
+        <Frame
+            Grid.Row="1"
+            Margin="0,-55,0,0"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-200}"
+            CornerRadius="15">
+
+            <views:TabView
+                x:Name="mainTabView"
+                FlowDirection="LeftToRight"
+                TabIndicatorColor="{StaticResource PrimaryDarkColor}"
+                TabIndicatorHeight="3"
+                TabStripBackgroundColor="White"
+                TabStripHeight="60"
+                TabStripPlacement="Top">
+                <views:TabViewItem
+                    FontFamily="{StaticResource ShabnameBold}"
+                    Text="نظراتــ"
+                    TextColorSelected="{StaticResource PrimaryDarkColor}">
+                    <Grid
+                        Margin="15,25,15,5"
+                        FlowDirection="RightToLeft"
+                        RowDefinitions="Auto,*">
+                        <Grid Padding="0" ColumnDefinitions="*,Auto">
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Large"
+                                    Text="{Binding RatesCount}"
+                                    VerticalOptions="Center" />
+                                <Label Text="نظر ثبت شده" VerticalOptions="Center" />
+                            </StackLayout>
+                            <Button
+                                Grid.Column="1"
+                                Padding="0"
+                                Background="{StaticResource AccentColor}"
+                                Command="{Binding AddRateCommand}"
+                                CornerRadius="25"
+                                FontSize="Caption"
+                                HeightRequest="35"
+                                IsVisible="{Binding PurchaseVisible}"
+                                Text="نظر دادن"
+                                TextColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                            Dark={StaticResource Gray-Black}}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                        <CollectionView Grid.Row="1" ItemsSource="{Binding Rates}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <itemTemplates:RateItemTemplate />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </views:TabViewItem>
+                <views:TabViewItem
+                    FontFamily="{StaticResource ShabnameBold}"
+                    Text="توضیحاتــ"
+                    TextColorSelected="{StaticResource PrimaryDarkColor}">
+                    <ScrollView Margin="0,15,0,0" FlowDirection="RightToLeft">
+                        <StackLayout Padding="10">
+                            <Grid ColumnDefinitions="*,*">
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame
+                                        Padding="10,9"
+                                        BackgroundColor="{StaticResource PrimaryColor}"
+                                        CornerRadius="25"
+                                        HasShadow="False"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource MaterialFontFamily}"
+                                            FontSize="20"
+                                            Text="{x:Static model:MaterialIconFont.Teach}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding PageDto.Course.Teacher}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                    <Frame
+                                        Padding="10,9"
+                                        BackgroundColor="{StaticResource PrimaryColor}"
+                                        CornerRadius="25"
+                                        HasShadow="False"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource MaterialFontFamily}"
+                                            FontSize="20"
+                                            Text="{x:Static model:MaterialIconFont.ClockAlert}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding PageDto.CourseTime}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+
+                            </Grid>
+                            <Grid ColumnDefinitions="*,*">
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Frame
+                                        Padding="10,9"
+                                        BackgroundColor="{StaticResource PrimaryColor}"
+                                        CornerRadius="25"
+                                        HasShadow="False"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontFamily="{StaticResource MaterialFontFamily}"
+                                            FontSize="20"
+                                            Text="{x:Static model:MaterialIconFont.BookmarkMultipleOutline}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding Path=PageDto.Course.CourseCategoryName}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                    <Frame
+                                        Padding="10,9"
+                                        BackgroundColor="{StaticResource PrimaryColor}"
+                                        CornerRadius="25"
+                                        HasShadow="False"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            Margin="-2,0,0,0"
+                                            FontFamily="{StaticResource MaterialFontFamily}"
+                                            FontSize="20"
+                                            Text="{x:Static model:MaterialIconFont.Book}"
+                                            TextColor="White"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Caption"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding PageDto.Course.Reference}"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+
+                            </Grid>
+
+                            <StackLayout Margin="0,15,0,0" Orientation="Horizontal">
+                                <Label
+                                    FontFamily="{StaticResource MaterialFontFamily}"
+                                    FontSize="20"
+                                    Text="{x:Static model:MaterialIconFont.Information}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="توضیحاتــ"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                            <StackLayout>
+                                <controllers:LabelUi
+                                    Margin="0,-5,0,0"
+                                    BGColor="{StaticResource Gray-200}"
+                                    Text="{Binding PageDto.Course.Detail}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                </views:TabViewItem>
+                <views:TabViewItem
+                    FontFamily="{StaticResource ShabnameBold}"
+                    Text="ویدیوها"
+                    TextColorSelected="{StaticResource PrimaryDarkColor}">
+
+                    <Grid
+                        Margin="4,15,4,4"
+                        FlowDirection="RightToLeft"
+                        RowDefinitions="Auto,*">
+                        <StackLayout BindableLayout.ItemsSource="{Binding PageDto.Handouts}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <itemTemplates:HandoutItemTemplate PurchaseCommand="{Binding Path=BindingContext.PurchaseCourseCommand, Source={x:Reference Page}}" ShowCommand="{Binding Path=BindingContext.ShowHandoutCommand, Source={x:Reference Page}}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                        <CollectionView
+                            Grid.Row="1"
+                            FlowDirection="RightToLeft"
+                            ItemsSource="{Binding PageDto.Videos}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <itemTemplates:VideoItemTemplate PlayCommand="{Binding Path=BindingContext.PlayVideoCommand, Source={x:Reference Page}}" PurchaseCommand="{Binding Path=BindingContext.PurchaseCourseCommand, Source={x:Reference Page}}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </views:TabViewItem>
+            </views:TabView>
+        </Frame>
+    </Grid>
+</ContentPage>

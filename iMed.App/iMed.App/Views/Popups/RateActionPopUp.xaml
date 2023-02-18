@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.Popups.RateActionPopUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:xForms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+    Margin="20,0"
+    FlowDirection="RightToLeft"
+    VerticalOptions="Center">
+    <ContentView.Content>
+        <Frame
+            Padding="8"
+            BackgroundColor="{StaticResource Gray-100}"
+            CornerRadius="10">
+            <StackLayout>
+                <Label
+                    Margin="10,5,10,0"
+                    FontSize="Body"
+                    HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span FontFamily="{StaticResource Shabname}" Text="نظردادن برای " />
+                            <Span FontFamily="{StaticResource ShabnameBold}" Text="{Binding Course.Name}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <textInputLayout:SfTextInputLayout
+                    Margin="5,5,5,-15"
+                    ContainerType="Outlined"
+                    FlowDirection="RightToLeft"
+                    Hint="نام و نام خانوادگی  "
+                    OutlineCornerRadius="8">
+                    <Entry
+                        x:Name="nameEntry"
+                        FontSize="Caption"
+                        IsReadOnly="True"
+                        Keyboard="Text"
+                        ReturnType="Go" />
+                </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout
+                    Margin="5,0,5,-5"
+                    ContainerType="Outlined"
+                    FlowDirection="RightToLeft"
+                    Hint="متن پیام  "
+                    OutlineCornerRadius="8">
+                    <Editor
+                        x:Name="messageEditor"
+                        FontSize="Caption"
+                        HeightRequest="150"
+                        Keyboard="Chat" />
+                </textInputLayout:SfTextInputLayout>
+                <Grid Margin="8,0,8,8" ColumnDefinitions="*,Auto">
+                    <Label
+                        FontFamily="{StaticResource ShabnameBold}"
+                        Text="امتیاز دهید ... "
+                        TextColor="#444"
+                        VerticalOptions="Center" />
+                    <xForms:SfRating
+                        x:Name="rating"
+                        Grid.Column="1"
+                        ItemCount="5"
+                        ItemSize="25"
+                        ItemSpacing="5"
+                        Precision="Standard"
+                        TooltipPlacement="BottomRight" />
+                </Grid>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Button
+                        Background="{StaticResource Green}"
+                        Clicked="AcceptButton_OnClicked"
+                        CornerRadius="8"
+                        Text="تایید"
+                        TextColor="White" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Clicked="CancelButton_OnClicked"
+                        Text="انصرافــ"
+                        TextColor="{StaticResource Danger}" />
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

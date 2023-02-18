@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.AuthenticationPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    xmlns:maskedEdit="clr-namespace:Syncfusion.XForms.MaskedEdit;assembly=Syncfusion.SfMaskedEdit.XForms"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{StaticResource Gray-200}"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="2*,2*">
+        <Grid RowDefinitions="2*,*">
+            <forms:AnimationView
+                Margin="25"
+                Animation="lock.json"
+                AnimationSource="AssetOrBundle"
+                Command="{Binding ClickCommand}"
+                RepeatMode="Infinite" />
+            <StackLayout
+                Grid.Row="1"
+                Margin="15,0"
+                HorizontalOptions="Center">
+                <Label
+                    FontFamily="{StaticResource ShabnameBold}"
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="ورود و ثبتـــ نام"
+                    TextColor="{StaticResource PrimaryDarkColor}" />
+                <Label
+                    FontFamily="{StaticResource Shabname}"
+                    FontSize="Caption"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="برای ورود به اپلیکیشن اطلاعات مورد نیاز را طبق توضیحات ثبت نمایید."
+                    TextColor="{StaticResource PrimaryDarkColor}" />
+            </StackLayout>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Frame
+                Margin="-60,0,-60,-60"
+                BackgroundColor="{StaticResource AccentColor}"
+                Rotation="-10" />
+            <Frame
+                Margin="-60,0,-60,-60"
+                Background="{StaticResource PrimaryColor}"
+                Rotation="10" />
+            <StackLayout
+                Margin="15,20,15,0"
+                IsVisible="{Binding VerifyPhoneVisible}"
+                VerticalOptions="Center">
+                <Label
+                    Margin="5,5,5,0"
+                    FontFamily="{StaticResource ShabnameBold}"
+                    FontSize="Body"
+                    Text="شماره تلفن همراه"
+                    TextColor="{StaticResource Gray-200}" />
+                <Label
+                    Margin="5,0,5,5"
+                    FontFamily="{StaticResource Shabname}"
+                    FontSize="Caption"
+                    Text="ابتدا شماره تلفن همراه خود را وارد نمایید، اگر از قبل ثبت نام شده باشد وارد اپلیکیشن خواهید شد، در غیر این صورت به مرحله ثبت نام هدایت خواهید شد."
+                    TextColor="{StaticResource Gray-200}" />
+                <textInputLayout:SfTextInputLayout
+                    Margin="0,25,0,0"
+                    ContainerBackgroundColor="Transparent"
+                    ContainerType="Outlined"
+                    ErrorText="{Binding PhoneNumber.ErrorMessage}"
+                    FlowDirection="RightToLeft"
+                    HasError="{Binding Path=PhoneNumber.HasError, Mode=OneWay}"
+                    Hint="شماره تلفن همراه    "
+                    OutlineCornerRadius="8"
+                    UnfocusedColor="{StaticResource Gray-200}">
+                    <Entry
+                        Keyboard="Numeric"
+                        ReturnCommand="{Binding VerifyPhoneCommand}"
+                        ReturnType="Go"
+                        Text="{Binding PhoneNumber.Value}"
+                        TextColor="{StaticResource Gray-200}" />
+                    <textInputLayout:SfTextInputLayout.HintLabelStyle>
+                        <textInputLayout:LabelStyle FontFamily="{StaticResource Shabname}" FontSize="16" />
+                    </textInputLayout:SfTextInputLayout.HintLabelStyle>
+                </textInputLayout:SfTextInputLayout>
+                <StackLayout Margin="0,-15,0,10" Orientation="Horizontal">
+                    <Button
+                        Padding="10,0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                          Dark={StaticResource AccentDarkColor}}"
+                        Command="{Binding RulesAndPrivacyCommand}"
+                        CornerRadius="40"
+                        HeightRequest="25"
+                        Text="شرایط استفاده از خدمات"
+                        TextColor="{StaticResource AccentDarkColor}" />
+                    <Label Text="و" VerticalOptions="Center" />
+                    <Button
+                        Padding="8,0,10,3"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                          Dark={StaticResource AccentDarkColor}}"
+                        Command="{Binding RulesAndPrivacyCommand}"
+                        CornerRadius="40"
+                        HeightRequest="25"
+                        Text="حریم خصوصی "
+                        TextColor="{StaticResource AccentDarkColor}" />
+                    <Label Text="را می پذیرم" VerticalOptions="Center" />
+
+                </StackLayout>
+                <Grid ColumnDefinitions="2*,0">
+                    <Button
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                          Dark={StaticResource AccentDarkColor}}"
+                        Command="{Binding VerifyPhoneCommand}"
+                        CornerRadius="10"
+                        FontFamily="{StaticResource ShabnameBold}"
+                        Text="چک شماره تلفن"
+                        TextColor="{StaticResource Gray-100}" />
+
+                </Grid>
+            </StackLayout>
+
+            <StackLayout
+                Margin="15,20,15,0"
+                IsVisible="{Binding LoginVisible}"
+                VerticalOptions="Center">
+                <Label
+                    Margin="5,5,5,0"
+                    FontFamily="{StaticResource ShabnameBold}"
+                    FontSize="Body"
+                    Text="رمز عبور"
+                    TextColor="{StaticResource Gray-200}" />
+                <Label
+                    Margin="5,0,5,5"
+                    FontFamily="{StaticResource Shabname}"
+                    FontSize="Caption"
+                    Text="شماره تلفن همراه شما در سیستم ثبت شده است، برای ورود رمز عبور خود را وارد نمایید. "
+                    TextColor="{StaticResource Gray-200}" />
+                <textInputLayout:SfTextInputLayout
+                    Margin="0,25,0,0"
+                    ContainerBackgroundColor="Transparent"
+                    ContainerType="Outlined"
+                    ErrorText="{Binding Password.ErrorMessage}"
+                    FlowDirection="RightToLeft"
+                    HasError="{Binding Password.HasError}"
+                    Hint="رمز عبور    "
+                    OutlineCornerRadius="8"
+                    UnfocusedColor="{StaticResource Gray-200}">
+                    <Entry
+                        IsPassword="True"
+                        ReturnType="Go"
+                        Text="{Binding Password.Value}"
+                        TextColor="{StaticResource Gray-200}" />
+                    <textInputLayout:SfTextInputLayout.HintLabelStyle>
+                        <textInputLayout:LabelStyle FontFamily="{StaticResource Shabname}" FontSize="16" />
+                    </textInputLayout:SfTextInputLayout.HintLabelStyle>
+                </textInputLayout:SfTextInputLayout>
+                <Grid ColumnDefinitions="*,2*,Auto">
+                    <Button
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                          Dark={StaticResource AccentDarkColor}}"
+                        Command="{Binding LoginCommand}"
+                        CornerRadius="10"
+                        FontFamily="{StaticResource ShabnameBold}"
+                        Text="ورود"
+                        TextColor="{StaticResource Gray-100}" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Command="{Binding ForgetPasswordCommand}"
+                        FontFamily="{StaticResource ShabnameBold}"
+                        Text="فراموشی رمز عبور"
+                        TextColor="{StaticResource Gray-100}" />
+                    <Button
+                        Grid.Column="2"
+                        Padding="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                          Dark={StaticResource AccentDarkColor}}"
+                        Command="{Binding BackCommand}"
+                        CornerRadius="35"
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="30"
+                        HeightRequest="45"
+                        Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                        TextColor="{StaticResource Gray-100}"
+                        VerticalOptions="Center"
+                        WidthRequest="45" />
+
+                </Grid>
+            </StackLayout>
+
+
+            <StackLayout
+                Margin="15,30,15,0"
+                IsVisible="{Binding SignUpVisible}"
+                VerticalOptions="Center">
+                <ScrollView VerticalScrollBarVisibility="Never">
+
+                    <StackLayout>
+                        <Label
+                            Margin="5,5,5,0"
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Body"
+                            Text="ثبت نام"
+                            TextColor="{StaticResource Gray-200}" />
+                        <Label
+                            Margin="5,0,5,5"
+                            FontFamily="{StaticResource Shabname}"
+                            FontSize="Caption"
+                            Text="لطفاً فیلدهای زیر را به صورت صحیح وارد نمایید."
+                            TextColor="{StaticResource Gray-200}" />
+                        <textInputLayout:SfTextInputLayout
+                            ErrorText="{Binding FirstName.ErrorMessage}"
+                            HasError="{Binding FirstName.HasError}"
+                            Hint="نام    "
+                            UnfocusedColor="{StaticResource Gray-200}">
+                            <Entry
+                                ReturnType="Next"
+                                Text="{Binding FirstName.Value}"
+                                TextColor="{StaticResource Gray-200}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <textInputLayout:SfTextInputLayout
+                            Margin="0,-10"
+                            ErrorText="{Binding LastName.ErrorMessage}"
+                            HasError="{Binding LastName.HasError}"
+                            Hint="نام خانوادگی    "
+                            UnfocusedColor="{StaticResource Gray-200}">
+                            <Entry
+                                ReturnType="Next"
+                                Text="{Binding LastName.Value}"
+                                TextColor="{StaticResource Gray-200}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <textInputLayout:SfTextInputLayout
+                            Margin="0,0,0,-10"
+                            ErrorText="{Binding Password.ErrorMessage}"
+                            HasError="{Binding Password.HasError}"
+                            Hint="رمز عبور    "
+                            OutlineCornerRadius="8"
+                            UnfocusedColor="{StaticResource Gray-200}">
+                            <Entry
+                                IsPassword="True"
+                                ReturnType="Next"
+                                Text="{Binding Password.Value}"
+                                TextColor="{StaticResource Gray-200}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <textInputLayout:SfTextInputLayout
+                            Margin="0,0,0,-10"
+                            ErrorText="{Binding PhoneNumber.ErrorMessage}"
+                            HasError="{Binding PhoneNumber.HasError}"
+                            Hint="شماره تلفن    "
+                            OutlineCornerRadius="8"
+                            UnfocusedColor="{StaticResource Gray-200}">
+                            <Entry
+                                IsReadOnly="True"
+                                ReturnType="Next"
+                                Text="{Binding PhoneNumber.Value}"
+                                TextColor="{StaticResource Gray-200}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <textInputLayout:SfTextInputLayout
+                            ErrorText="{Binding VerifyCode.ErrorMessage}"
+                            HasError="{Binding VerifyCode.HasError}"
+                            Hint="کد ارسالی    "
+                            UnfocusedColor="{StaticResource Gray-200}">
+                            <Entry
+                                ReturnType="Go"
+                                Text="{Binding VerifyCode.Value}"
+                                TextColor="{StaticResource Gray-200}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <Grid Margin="0,0,0,15" ColumnDefinitions="*,2*,Auto">
+                            <Button
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                                  Dark={StaticResource AccentDarkColor}}"
+                                Command="{Binding SignUpCommand}"
+                                CornerRadius="10"
+                                FontFamily="{StaticResource ShabnameBold}"
+                                Text="ثبتــ نام"
+                                TextColor="{StaticResource Gray-100}" />
+                            <Button
+                                Grid.Column="1"
+                                BackgroundColor="Transparent"
+                                FontFamily="{StaticResource ShabnameBold}"
+                                Text="ارسال مجدد کد"
+                                TextColor="{StaticResource Gray-100}" />
+                            <Button
+                                Grid.Column="2"
+                                Padding="0"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                                  Dark={StaticResource AccentDarkColor}}"
+                                Command="{Binding BackCommand}"
+                                CornerRadius="35"
+                                FontFamily="{StaticResource MaterialFontFamily}"
+                                FontSize="30"
+                                HeightRequest="45"
+                                Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                                TextColor="{StaticResource Gray-100}"
+                                VerticalOptions="Center"
+                                WidthRequest="45" />
+
+                        </Grid>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+        </Grid>
+    </Grid>
+
+</ContentPage>

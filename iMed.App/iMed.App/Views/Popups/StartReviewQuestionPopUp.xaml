@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.Popups.StartReviewQuestionPopUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Margin="20,0"
+    FlowDirection="RightToLeft"
+    VerticalOptions="Center">
+    <ContentView.Content>
+        <Frame
+            Padding="8"
+            BackgroundColor="{StaticResource Gray-100}"
+            CornerRadius="10">
+            <StackLayout>
+                <Label
+                    Margin="10,5,10,15"
+                    FontFamily="{StaticResource ShabnameBold}"
+                    FontSize="Body"
+                    HorizontalOptions="Center"
+                    Text="میخواهید کدام دسته از فلش کارت ها را مرور کنید ؟" />
+                <Grid ColumnDefinitions="*,*">
+                    <Button
+                        Background="{AppThemeBinding Light={StaticResource Info},
+                                                     Dark={StaticResource Gray-900}}"
+                        BorderColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                      Dark={StaticResource Info}}"
+                        BorderWidth="1"
+                        Clicked="NewFlashCardsButton_Clicked"
+                        CornerRadius="8"
+                        Text="فلش کارت های جدید"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                    Dark={StaticResource Info}}" />
+                    <Button
+                        Grid.Column="1"
+                        Background="{AppThemeBinding Light={StaticResource Info},
+                                                     Dark={StaticResource Gray-900}}"
+                        BorderColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                      Dark={StaticResource Info}}"
+                        BorderWidth="1"
+                        Clicked="OldFlashCardsButton_Clicked"
+                        CornerRadius="8"
+                        Text="فلش کارت های قدیمی"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                    Dark={StaticResource Info}}" />
+                </Grid>
+                <Button
+                    Background="{AppThemeBinding Light={StaticResource Green},
+                                                 Dark={StaticResource Gray-900}}"
+                    BorderColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                  Dark={StaticResource Green}}"
+                    BorderWidth="1"
+                    Clicked="AllFlashCardsButton_Clicked"
+                    CornerRadius="8"
+                    Text="همه فلش کارت ها"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                Dark={StaticResource Green}}" />
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

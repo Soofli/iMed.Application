@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="iMed.App.Views.Themes.MainTheme"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:materialFrame="http://sharpnado.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:themes1="clr-namespace:iMed.App.Views.Themes;assembly=iMed.App">
+
+    <ResourceDictionary.MergedDictionaries>
+        <themes1:BaseTheme />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--<Color x:Key="PrimaryColor">#7F53E4</Color>
+    <Color x:Key="PrimaryDarkColor">#4926B1</Color>
+    <Color x:Key="PrimaryLightColor">#B481FF</Color>
+    <Color x:Key="AccentColor">#50BABD</Color>
+    <Color x:Key="AccentDarkColor">#008A8D</Color>
+    <Color x:Key="AccentLightColor">#86EDEF</Color>-->
+
+    <Color x:Key="PrimaryColor">#90be6d</Color>
+    <Color x:Key="PrimaryDarkColor">#618e40</Color>
+    <Color x:Key="PrimaryLightColor">#c2f19c</Color>
+    <Color x:Key="AccentColor">#577590</Color>
+    <Color x:Key="AccentDarkColor">#2a4a62</Color>
+    <Color x:Key="AccentLightColor">#86a4c0</Color>
+    <Color x:Key="DarkAccentColor">#577590</Color>
+
+
+
+    <Color x:Key="PrimaryGradient">#e83f94</Color>
+    <Color x:Key="SecondaryGradient">#7644ad</Color>
+
+    <Color x:Key="Gray-100">#f6f7f8</Color>
+    <Color x:Key="Gray-200">#ebecef</Color>
+    <Color x:Key="Gray-300">#ced2d9</Color>
+    <Color x:Key="Gray-400">#b2b8c2</Color>
+    <Color x:Key="Gray-500">#959eac</Color>
+    <Color x:Key="Gray-600">#788396</Color>
+    <Color x:Key="Gray-700">#606a7b</Color>
+    <Color x:Key="Gray-800">#4a515e</Color>
+    <Color x:Key="Gray-900">#333942</Color>
+    <Color x:Key="Gray-Black">#000000</Color>
+    <Color x:Key="Gray-White">#ffffff</Color>
+
+    <Color x:Key="AcrylicFrameBackgroundColor">#F1F1F1</Color>
+    <Color x:Key="SecondaryColor">#60000000</Color>
+    <Color x:Key="TernaryColor">#30000000</Color>
+    <Color x:Key="AcrylicSurface">#E6E6E6</Color>
+
+    <Color x:Key="TextPrimaryColor">Black</Color>
+    <Color x:Key="TextSecondaryColor">#60000000</Color>
+    <Color x:Key="TextTernaryColor">#40000000</Color>
+
+
+
+</ResourceDictionary>

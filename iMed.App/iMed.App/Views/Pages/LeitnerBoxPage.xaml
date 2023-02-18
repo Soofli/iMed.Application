@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.LeitnerBoxPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+    x:Name="page"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{StaticResource Gray-200}"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Frame
+            Margin="0,0,0,-60"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-White}"
+            CornerRadius="15">
+
+            <CollectionView
+                Margin="0,0,0,6"
+                HeightRequest="35"
+                HorizontalOptions="Center"
+                ItemsSource="{Binding Path=PageDto.LeitnerBoxes}"
+                RotationY="180"
+                VerticalOptions="End">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RotationY="-180">
+                            <Frame
+                                Margin="1,3"
+                                Padding="15,0,15,3"
+                                BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToTransBackgroundColorConverter}}"
+                                CornerRadius="15"
+                                HasShadow="False">
+                                <StackLayout Orientation="Horizontal">
+
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Caption"
+                                        Text="{Binding Status, Converter={StaticResource EnumToNameConverter}}"
+                                        TextColor="{Binding IsSelected, Converter={StaticResource BoolToTextColorConverter}}"
+                                        VerticalOptions="Center" />
+                                    <Frame
+                                        Margin="-10,4,0,2"
+                                        Padding="0,3"
+                                        CornerRadius="20"
+                                        HasShadow="False"
+                                        IsVisible="{Binding IsSelected}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="25">
+
+                                        <Label
+                                            Margin="0,-2,0,0"
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Caption"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding FlashCardCount}"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                </StackLayout>
+                            </Frame>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="LeitnerBoxTapGestureRecognizer_Tapped" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Frame>
+        <Frame Padding="15,20,15,30">
+            <Frame.Background>
+                <LinearGradientBrush>
+                    <GradientStop Offset="0.1" Color="#67B26F" />
+                    <GradientStop Offset="1.0" Color="#4CA2CD" />
+                </LinearGradientBrush>
+            </Frame.Background>
+            <Grid RowDefinitions="Auto,*">
+                <Grid ColumnDefinitions="Auto,*">
+
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Large"
+                            Text="جعبه لایتــــــنر"
+                            TextColor="White" />
+                    </StackLayout>
+                    <Button
+                        Grid.Column="1"
+                        Padding="0,5,0,5"
+                        BackgroundColor="#90333333"
+                        Command="{Binding BackNavigationCommand}"
+                        CornerRadius="20"
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="28"
+                        HeightRequest="40"
+                        HorizontalOptions="End"
+                        Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                        TextColor="White"
+                        VerticalOptions="Center"
+                        WidthRequest="40" />
+                </Grid>
+
+                <StackLayout
+                    Grid.Row="1"
+                    Margin="0,-20,0,0"
+                    VerticalOptions="Center">
+                    <forms:AnimationView
+                        Animation="checkYes.json"
+                        AnimationSource="AssetOrBundle"
+                        Command="{Binding ClickCommand}"
+                        HeightRequest="150"
+                        RepeatMode="Infinite"
+                        WidthRequest="150" />
+
+                    <StackLayout
+                        Margin="8,0"
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal">
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Large"
+                            Text="کل فلش کارت ها : "
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Large"
+                            Text="{Binding Path=PageDto.TotalFlashCard}"
+                            TextColor="#4B4657" />
+                    </StackLayout>
+                    <BoxView
+                        Margin="60,0"
+                        BackgroundColor="{StaticResource Gray-100}"
+                        HeightRequest="1"
+                        Opacity="0.3" />
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+
+                        <StackLayout
+                            Margin="8,0"
+                            HorizontalOptions="Center"
+                            Orientation="Horizontal">
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Medium"
+                                Text="مرور امروز : "
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Large"
+                                Text="{Binding Path=PageDto.TotalTodayFlashCard}"
+                                TextColor="#4B4657" />
+                        </StackLayout>
+                        <StackLayout
+                            Margin="8,0"
+                            HorizontalOptions="Center"
+                            Orientation="Horizontal">
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Medium"
+                                Text=" تمام شده : "
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Large"
+                                Text="{Binding Path=PageDto.TotalDoneFlashCard}"
+                                TextColor="#4B4657" />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </Frame>
+
+        <StackLayout
+            Grid.Row="0"
+            Margin="0,0,0,-20"
+            VerticalOptions="End">
+
+            <CollectionView
+                HeightRequest="35"
+                ItemsSource="{Binding Path=PageDto.FlashCardCategories}"
+                RotationY="180"
+                VerticalOptions="End">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RotationY="-180">
+                            <Frame
+                                Margin="5,3"
+                                Padding="8,0,8,0"
+                                BackgroundColor="{Binding IsSelected, Converter={StaticResource BoolToBackgroundColorConverter}}"
+                                CornerRadius="15"
+                                HasShadow="False">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    FontSize="Caption"
+                                    Text="{Binding Name}"
+                                    TextColor="{Binding IsSelected, Converter={StaticResource BoolToTextColorConverter}}"
+                                    VerticalOptions="Center" />
+                            </Frame>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="FlashCardTagTapGestureRecognizer_Tapped" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        <CollectionView
+            Grid.Row="1"
+            Margin="0,55,0,0"
+            ItemsSource="{Binding Path=PageDto.SelectedFlashCards}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Frame
+                            Margin="8"
+                            Padding="10"
+                            CornerRadius="8">
+                            <StackLayout>
+                                <Label
+                                    FontSize="Caption"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    MaxLines="4"
+                                    Text="{Binding Question}" />
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                        <Label Text="زمان مرور : " />
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            IsVisible="{Binding IsArchive, Converter={StaticResource InvertedBoolConverter}}"
+                                            Text="{Binding NextReviewAt, Converter={StaticResource DateTimeToRemainingConverter}}"
+                                            TextColor="{StaticResource PrimaryDarkColor}" />
+
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            IsVisible="{Binding IsArchive}"
+                                            Text="آرشیو شده"
+                                            TextColor="{StaticResource Red}" />
+                                    </StackLayout>
+                                    <Button
+                                        Grid.Column="1"
+                                        Padding="15,0,15,2"
+                                        BackgroundColor="{AppThemeBinding Light=#F1C40F,
+                                                                          Dark={StaticResource ElegantDark}}"
+                                        Clicked="ShowFlashCardButton_Clicked"
+                                        CornerRadius="25"
+                                        HeightRequest="25"
+                                        Text="دیدن پاسخ"
+                                        TextColor="{AppThemeBinding Dark={StaticResource Gray-White},
+                                                                    Light={StaticResource Gray-700}}" />
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Grid
+            Grid.Row="2"
+            Margin="8,0,8,8"
+            ColumnDefinitions="*,Auto">
+            <Button
+                BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryColor},
+                                                  Dark={StaticResource AccentDarkColor}}"
+                Command="{Binding ReviewAllTodayFlashCardCommand}"
+                CornerRadius="8"
+                FontFamily="{StaticResource ShabnameBold}"
+                FontSize="Caption"
+                Text="مرور فلش کارتـــ های امروز"
+                TextColor="{AppThemeBinding Light=White,
+                                            Dark={StaticResource Gray-Black}}" />
+            <Button
+                Grid.Column="1"
+                BackgroundColor="Transparent"
+                Command="{Binding ReviewAllSelectedFlashCardCommand}"
+                FontFamily="{StaticResource ShabnameBold}"
+                FontSize="Caption"
+                Text="مرور درس های انتخابی"
+                TextColor="{AppThemeBinding Light={StaticResource PrimaryColor},
+                                            Dark={StaticResource AccentLightColor}}" />
+        </Grid>
+    </Grid>
+</ContentPage>

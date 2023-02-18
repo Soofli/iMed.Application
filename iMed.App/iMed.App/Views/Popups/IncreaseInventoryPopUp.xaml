@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.Popups.IncreaseInventoryPopUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    Margin="20,0"
+    FlowDirection="RightToLeft"
+    VerticalOptions="Center">
+    <ContentView.Content>
+        <Frame
+            Padding="8"
+            BackgroundColor="{StaticResource Gray-100}"
+            CornerRadius="10">
+            <StackLayout>
+                <Label
+                    Margin="10,10,10,0"
+                    FontFamily="{StaticResource ShabnameBold}"
+                    FontSize="Body"
+                    Text="افزایش موجودی کیف پول" />
+
+                <textInputLayout:SfTextInputLayout
+                    Margin="5,5,5,-5"
+                    ContainerType="Outlined"
+                    FlowDirection="RightToLeft"
+                    Hint="مبلغ مورد نظر - ریال    "
+                    OutlineCornerRadius="8">
+                    <Entry
+                        x:Name="amountEntry"
+                        FontSize="Caption"
+                        Keyboard="Numeric"
+                        ReturnType="Go"
+                        TextChanged="AmountEntry_OnTextChanged" />
+                </textInputLayout:SfTextInputLayout>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Button
+                        Background="{StaticResource Green}"
+                        Clicked="SubmitButton_OnClicked"
+                        CornerRadius="8"
+                        Text="تایید و پرداختــ"
+                        TextColor="White" />
+                    <Button
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Clicked="CancelButton_OnClicked"
+                        Text="انصرافــ"
+                        TextColor="{StaticResource Danger}" />
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

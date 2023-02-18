@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.ItemTemplates.CourseItemTemplate"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:viewModels="clr-namespace:iMed.App.ViewModels;assembly=iMed.App"
+    xmlns:xForms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms">
+    <ContentView.Content>
+        <Grid>
+            <Frame
+                Margin="5"
+                Padding="0"
+                CornerRadius="5"
+                WidthRequest="255">
+                <Grid>
+                    <forms:CachedImage Aspect="AspectFill" Source="{Binding ImageFileName, Converter={StaticResource ImageUrlConverter}}" />
+                    <Frame
+                        Margin="0,0,0,-1"
+                        Padding="10,5"
+                        BackgroundColor="#60000000"
+                        CornerRadius="5"
+                        VerticalOptions="End">
+                        <StackLayout>
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Caption"
+                                Text="{Binding Name}"
+                                TextColor="White" />
+                            <Grid>
+
+                                <Label
+                                    Margin="0,-8,0,0"
+                                    FontSize="Caption"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Teacher}"
+                                    TextColor="White" />
+                                <StackLayout
+                                    Margin="0,-7,0,0"
+                                    HorizontalOptions="End"
+                                    Orientation="Horizontal">
+                                    <Label
+                                        FontFamily="{StaticResource MaterialFontFamily}"
+                                        FontSize="20"
+                                        Text="{x:Static model:MaterialIconFont.Star}"
+                                        TextColor="#f39c12" />
+                                    <Label
+                                        Margin="0,0,0,0"
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="15"
+                                        Text="{Binding RateAvg, Converter={StaticResource DoubleToRoundConverter}}"
+                                        TextColor="#f39c12" />
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                    <Frame
+                        Margin="10"
+                        Padding="10,3"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        CornerRadius="25"
+                        HorizontalOptions="Start"
+                        IsVisible="{Binding IsPurchase}"
+                        VerticalOptions="Start">
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Micro"
+                            Text="خریداری شده"
+                            TextColor="White" />
+                    </Frame>
+                </Grid>
+            </Frame>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

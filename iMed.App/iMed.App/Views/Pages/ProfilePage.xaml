@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.ProfilePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{StaticResource Gray-200}"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="2*,6*">
+        <Grid RowDefinitions="2*,*">
+            <Frame
+                Grid.Row="0"
+                Margin="-60,-60,-60,0"
+                BackgroundColor="{StaticResource AccentColor}"
+                Rotation="-10" />
+            <Frame
+                Grid.Row="0"
+                Margin="-60,-60,-60,0"
+                Background="{StaticResource PrimaryColor}"
+                Rotation="10" />
+            <Grid
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                RowDefinitions="Auto,*">
+                <StackLayout Grid.Row="1" Margin="0,-65,0,0">
+                    <Frame
+                        Padding="5"
+                        CornerRadius="55"
+                        HeightRequest="100"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="100">
+                        <forms:CachedImage Aspect="Fill" Source="https://cdn-icons-png.flaticon.com/512/201/201799.png" />
+                    </Frame>
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Large"
+                            TextColor="{StaticResource PrimaryDarkColor}"
+                            VerticalOptions="Center">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding PageDto.User.FirstName}" />
+                                    <Span Text=" " />
+                                    <Span Text="{Binding PageDto.User.LastName}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Frame
+                            Padding="0"
+                            CornerRadius="25"
+                            VerticalOptions="Center">
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    Margin="3"
+                                    FontFamily="{StaticResource MaterialFontFamily}"
+                                    FontSize="25"
+                                    Text="{x:Static model:MaterialIconFont.StarCircle}"
+                                    TextColor="{StaticResource Warning}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Margin="0,1,0,0"
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Large"
+                                    Text="{Binding Path=PageDto.User.Score}" />
+
+                                <Label
+                                    Margin="10,-2,0,0"
+                                    FontFamily="{StaticResource Shabname}"
+                                    Text="امتیاز"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
+
+                <Grid Margin="0,15" ColumnDefinitions="Auto,*,Auto">
+                    <Button
+                        Grid.Column="0"
+                        Margin="15"
+                        Padding="3,0,0,0"
+                        BackgroundColor="#90333333"
+                        Command="{Binding LogOutCommand}"
+                        CornerRadius="30"
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="24"
+                        HeightRequest="40"
+                        Text="{x:Static model:MaterialIconFont.Logout}"
+                        TextColor="White"
+                        WidthRequest="40" />
+                    <Button
+                        Grid.Column="2"
+                        Margin="15"
+                        Padding="0"
+                        BackgroundColor="#90333333"
+                        Command="{Binding BackNavigationCommand}"
+                        CornerRadius="30"
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="28"
+                        HeightRequest="40"
+                        Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                        TextColor="White"
+                        WidthRequest="40" />
+                </Grid>
+            </Grid>
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+
+                <StackLayout Margin="15">
+                    <Grid ColumnDefinitions="*,*">
+
+                        <Grid Grid.Column="0">
+
+                            <Frame
+                                Margin="0,25,0,0"
+                                Padding="15,30,15,50"
+                                CornerRadius="8">
+                                <Grid RowDefinitions="*,Auto">
+
+                                    <StackLayout
+                                        Grid.Row="1"
+                                        Margin="0,15,0,0"
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal">
+
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Title"
+                                            Text="{Binding Path=PageDto.User.WalletBalance, StringFormat='{0:N0}'}"
+                                            TextColor="{StaticResource PrimaryColor}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            FontSize="Caption"
+                                            Text="تومان"
+                                            TextColor="{StaticResource PrimaryColor}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                            <Frame
+                                Margin="0,0,0,0"
+                                Padding="10"
+                                BackgroundColor="{StaticResource PrimaryColor}"
+                                CornerRadius="50"
+                                VerticalOptions="Start">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Large"
+                                    HorizontalOptions="Center"
+                                    Text="کیفــ پول"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </Frame>
+                            <Button
+                                Margin="15,0,15,-10"
+                                Padding="15,-5,15,0"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                                  Dark={StaticResource AccentDarkColor}}"
+                                Command="{Binding IncreaseInventoryCommand}"
+                                CornerRadius="35"
+                                HeightRequest="35"
+                                HorizontalOptions="Center"
+                                Text="افزایش موجودی"
+                                TextColor="White"
+                                VerticalOptions="End" />
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+
+                            <Frame
+                                Margin="0,25,0,0"
+                                Padding="15,30,15,50"
+                                CornerRadius="8">
+                                <Grid RowDefinitions="*,Auto">
+
+                                    <StackLayout
+                                        Grid.Row="1"
+                                        Margin="0,15,0,0"
+                                        HorizontalOptions="Center"
+                                        Orientation="Horizontal">
+
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Title"
+                                            Text="{Binding PageDto.PurchaseCount}"
+                                            TextColor="{StaticResource PrimaryColor}"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            FontSize="Caption"
+                                            Text="عدد"
+                                            TextColor="{StaticResource PrimaryColor}"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                            <Frame
+                                Margin="0,0,0,0"
+                                Padding="10"
+                                BackgroundColor="{StaticResource PrimaryColor}"
+                                CornerRadius="50"
+                                VerticalOptions="Start">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Large"
+                                    HorizontalOptions="Center"
+                                    Text="خریــدها"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </Frame>
+                            <Button
+                                Margin="15,0,15,-10"
+                                Padding="15,-5,15,0"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                                  Dark={StaticResource AccentDarkColor}}"
+                                Command="{Binding PurchasesCommand}"
+                                CornerRadius="35"
+                                HeightRequest="35"
+                                HorizontalOptions="Center"
+                                Text="مشاهده"
+                                TextColor="White"
+                                VerticalOptions="End" />
+                        </Grid>
+                    </Grid>
+                    <Grid Margin="0,30,0,0">
+                        <BoxView
+                            BackgroundColor="{StaticResource Gray-400}"
+                            HeightRequest="1"
+                            VerticalOptions="Center" />
+                        <Label
+                            Padding="15,0,15,3"
+                            BackgroundColor="{StaticResource Gray-200}"
+                            HorizontalOptions="Center"
+                            Text="مشخصاتـ فردی" />
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*">
+                        <textInputLayout:SfTextInputLayout
+                            Grid.Column="1"
+                            Margin="5,5,5,-10"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="نام خانوادگی    "
+                            IsEnabled="{Binding Path=EditIsEnable}"
+                            OutlineCornerRadius="8">
+                            <Entry
+                                FontSize="Caption"
+                                ReturnType="Next"
+                                Text="{Binding Path=PageDto.User.LastName}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <textInputLayout:SfTextInputLayout
+                            Margin="5,5,5,-10"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="نام    "
+                            IsEnabled="{Binding Path=EditIsEnable}"
+                            OutlineCornerRadius="8">
+                            <Entry
+                                FontSize="Caption"
+                                ReturnType="Next"
+                                Text="{Binding Path=PageDto.User.FirstName}" />
+                        </textInputLayout:SfTextInputLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*">
+                        <textInputLayout:SfTextInputLayout
+                            Grid.Column="0"
+                            Margin="5,5,5,-10"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="کد ملی    "
+                            IsEnabled="{Binding Path=EditIsEnable}"
+                            OutlineCornerRadius="8">
+                            <Entry
+                                FontSize="Caption"
+                                Keyboard="Numeric"
+                                ReturnType="Next"
+                                Text="{Binding Path=PageDto.User.IdentityCode}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <textInputLayout:SfTextInputLayout
+                            Grid.Column="1"
+                            Margin="5,5,5,-10"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="شماره تلفن همراه    "
+                            IsEnabled="{Binding Path=EditIsEnable}"
+                            OutlineCornerRadius="8">
+                            <Entry
+                                FontSize="Caption"
+                                Keyboard="Numeric"
+                                ReturnType="Next"
+                                Text="{Binding Path=PageDto.User.PhoneNumber}" />
+                        </textInputLayout:SfTextInputLayout>
+                    </Grid>
+                    <Grid ColumnDefinitions="*,*">
+                        <textInputLayout:SfTextInputLayout
+                            Margin="5,5,5,-10"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="رمز عبور    "
+                            IsEnabled="{Binding Path=ForceEditIsEnable}"
+                            OutlineCornerRadius="8">
+                            <Entry
+                                FontSize="Caption"
+                                IsPassword="True"
+                                ReturnType="Next"
+                                Text="{Binding Path=PageDto.User.DtoPassword}" />
+                        </textInputLayout:SfTextInputLayout>
+                        <textInputLayout:SfTextInputLayout
+                            Grid.Column="1"
+                            Margin="5,5,5,-10"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="ایمیل    "
+                            IsEnabled="{Binding Path=ForceEditIsEnable}"
+                            OutlineCornerRadius="8">
+                            <Entry
+                                FontSize="Caption"
+                                Keyboard="Email"
+                                ReturnType="Next"
+                                Text="{Binding Path=PageDto.User.Email}" />
+                        </textInputLayout:SfTextInputLayout>
+                    </Grid>
+
+                    <textInputLayout:SfTextInputLayout
+                        Margin="5,5,5,-10"
+                        ContainerType="Outlined"
+                        FlowDirection="RightToLeft"
+                        Hint="شماره دانشجویی / نظام    "
+                        IsEnabled="{Binding Path=EditIsEnable}"
+                        OutlineCornerRadius="8">
+                        <Entry
+                            FontSize="Caption"
+                            Keyboard="Numeric"
+                            ReturnType="Next"
+                            Text="{Binding Path=PageDto.User.StudentCode}" />
+                    </textInputLayout:SfTextInputLayout>
+                    <Grid>
+                        <Button
+                            Padding="25,0"
+                            BackgroundColor="Transparent"
+                            BorderColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                          Dark={StaticResource AccentDarkColor}}"
+                            BorderWidth="2"
+                            Command="{Binding EnableEditCommand}"
+                            CornerRadius="8"
+                            FontFamily="{StaticResource ShabnameBold}"
+                            HorizontalOptions="Start"
+                            IsVisible="{Binding Path=ForceEditIsEnable, Converter={StaticResource InvertedBoolConverter}}"
+                            Text="ویرایش اطلاعاتــ"
+                            TextColor="{StaticResource AccentColor}" />
+                        <Grid ColumnDefinitions="2*,Auto,*" IsVisible="{Binding Path=ForceEditIsEnable}">
+
+                            <Button
+                                Padding="25,0"
+                                BackgroundColor="{StaticResource Green}"
+                                Command="{Binding EditUserCommand}"
+                                CornerRadius="8"
+                                FontFamily="{StaticResource ShabnameBold}"
+                                Text="تایید ویرایش"
+                                TextColor="White" />
+                            <Button
+                                Grid.Column="1"
+                                Padding="25,0"
+                                BackgroundColor="Transparent"
+                                BorderColor="{StaticResource Danger}"
+                                BorderWidth="0"
+                                Command="{Binding DisableEditCommand}"
+                                CornerRadius="8"
+                                FontFamily="{StaticResource ShabnameBold}"
+                                HorizontalOptions="Start"
+                                Text="انصرافـــ"
+                                TextColor="{StaticResource Danger}" />
+                        </Grid>
+
+                    </Grid>
+
+
+                    <Grid Margin="0,10,0,0">
+                        <BoxView
+                            BackgroundColor="{StaticResource Gray-400}"
+                            HeightRequest="1"
+                            VerticalOptions="Center" />
+                        <Label
+                            Padding="15,0,15,3"
+                            BackgroundColor="{StaticResource Gray-200}"
+                            HorizontalOptions="Center"
+                            Text="مدارک تایید هویت" />
+                    </Grid>
+                    <Frame
+                        Margin="3"
+                        Padding="3"
+                        CornerRadius="8">
+                        <Grid>
+                            <forms:CachedImage Source="{Binding IdentityImageSource}" />
+                            <Frame
+                                Margin="5"
+                                Padding="12,5"
+                                BackgroundColor="#90000000"
+                                CornerRadius="8"
+                                HorizontalOptions="Start"
+                                IsVisible="False"
+                                VerticalOptions="Start">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Micro"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="تایید شده"
+                                    TextColor="White" />
+                            </Frame>
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="#90000000"
+                                CornerRadius="8"
+                                VerticalOptions="End">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Micro"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="عکس مورد نظر باید از کارت دانشجویی یا کارت نظام پزشکی باشد ، تصویر مورد نظر باید حداکثر در ابعاد 1920*1080 باشد ، حجم تصویر مورد نظر باید حداکثر 3 مگابایت باشد"
+                                    TextColor="White" />
+                            </Frame>
+                        </Grid>
+                    </Frame>
+                    <Button
+                        Margin="3,0"
+                        Padding="25,0"
+                        BackgroundColor="Transparent"
+                        BorderColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                      Dark={StaticResource AccentDarkColor}}"
+                        BorderWidth="2"
+                        Command="{Binding UploadIdentityImageCommand}"
+                        CornerRadius="8"
+                        FontFamily="{StaticResource ShabnameBold}"
+                        Text="اپلود مدارک تایید هویت"
+                        TextColor="{StaticResource AccentColor}" />
+                </StackLayout>
+                <Frame
+                    Margin="-10,0,-10,-15"
+                    Padding="25,8,25,30"
+                    Background="{StaticResource PrimaryColor}"
+                    CornerRadius="35"
+                    VerticalOptions="End">
+                    <StackLayout>
+                        <Label
+                            Margin="0,8"
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Body"
+                            HorizontalOptions="Center"
+                            Text="ارتباط با ما"
+                            TextColor="White" />
+                        <Grid ColumnDefinitions="*,*">
+                            <Frame
+                                Padding="0"
+                                BackgroundColor="#2E96C7"
+                                CornerRadius="45"
+                                HeightRequest="40">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    HorizontalOptions="Center"
+                                    Text="تلگرام ما"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Telegram_OnTapped" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                            <Frame
+                                Grid.Column="1"
+                                Padding="0"
+                                BackgroundColor="#41BB52"
+                                CornerRadius="45"
+                                HeightRequest="40">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    HorizontalOptions="Center"
+                                    Text="واتس اپــ"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Whatsapp_OnTapped" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

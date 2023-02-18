@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.ItemTemplates.AnswerItemTemplate"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App">
+    <ContentView.Content>
+        <Grid>
+            <Frame
+                x:Name="mainFrame"
+                Margin="0,3"
+                Padding="4,4,4,4"
+                BackgroundColor="{StaticResource Gray-100}"
+                CornerRadius="25"
+                HasShadow="False">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Frame
+                        x:Name="iconFrame"
+                        Padding="0"
+                        BackgroundColor="{StaticResource Gray-100}"
+                        CornerRadius="15"
+                        HasShadow="False"
+                        HeightRequest="25"
+                        VerticalOptions="Center"
+                        WidthRequest="25">
+                        <Label
+                            x:Name="iconLabel"
+                            FontFamily="{StaticResource MaterialFontFamily}"
+                            FontSize="18"
+                            HorizontalOptions="Center"
+                            IsVisible="False"
+                            Text="{x:Static model:MaterialIconFont.CheckBold}"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                    </Frame>
+                    <Label
+                        Grid.Column="1"
+                        Margin="8,0,0,0"
+                        FontSize="Caption"
+                        HorizontalOptions="Start"
+                        Text="{Binding Answer}"
+                        VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="AnswerTapGestureRecognizer_OnTapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.SearchPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:itemTemplates="clr-namespace:iMed.App.Views.ItemTemplates;assembly=iMed.App"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    x:Name="Page"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="Auto,*">
+        <Grid ColumnDefinitions="*,Auto">
+            <textInputLayout:SfTextInputLayout
+                Margin="0,15,15,0"
+                ContainerBackgroundColor="Transparent"
+                ContainerType="Outlined"
+                FlowDirection="RightToLeft"
+                Hint="جست جو کنید ...    "
+                OutlineCornerRadius="8"
+                UnfocusedColor="{StaticResource AccentColor}">
+                <Entry
+                    ReturnCommand="{Binding SearchCommand}"
+                    ReturnCommandParameter="{Binding Path=Text, Source={RelativeSource Self}}"
+                    ReturnType="Search" />
+            </textInputLayout:SfTextInputLayout>
+            <Button
+                Grid.Column="1"
+                Margin="8,8,5,0"
+                Padding="0"
+                BackgroundColor="#90333333"
+                Command="{Binding BackNavigationCommand}"
+                CornerRadius="30"
+                FontFamily="{StaticResource MaterialFontFamily}"
+                FontSize="28"
+                HeightRequest="40"
+                HorizontalOptions="End"
+                Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                TextColor="White"
+                VerticalOptions="Center"
+                WidthRequest="40" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+
+                <Grid Margin="15,5" ColumnDefinitions="Auto,*">
+                    <StackLayout Orientation="Horizontal">
+
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Large"
+                            Text="{Binding Path=PageDto.CoursesCount}"
+                            TextColor="{StaticResource Gray-400}"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Medium"
+                            Text="دوره پیدا شد"
+                            TextColor="{StaticResource Gray-400}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <BoxView
+                        Grid.Column="1"
+                        Margin="0,3,0,0"
+                        BackgroundColor="{StaticResource Gray-400}"
+                        HeightRequest="1"
+                        VerticalOptions="Center" />
+                </Grid>
+                <CollectionView
+                    HeightRequest="160"
+                    ItemsSource="{Binding Path=PageDto.Courses}"
+                    RotationY="180">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <itemTemplates:CourseItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectVideoCommand, Source={x:Reference Page}}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <Grid Margin="15,5" ColumnDefinitions="Auto,*">
+                    <StackLayout Orientation="Horizontal">
+
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Large"
+                            Text="{Binding Path=PageDto.FlashCardCategoriesCount}"
+                            TextColor="{StaticResource Gray-400}"
+                            VerticalOptions="Center" />
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Medium"
+                            Text="فلش کارت پیدا شد"
+                            TextColor="{StaticResource Gray-400}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <BoxView
+                        Grid.Column="1"
+                        Margin="0,3,0,0"
+                        BackgroundColor="{StaticResource Gray-400}"
+                        HeightRequest="1"
+                        VerticalOptions="Center" />
+                </Grid>
+
+                <CollectionView
+                    HeightRequest="200"
+                    ItemsSource="{Binding Path=PageDto.FlashCardCategories}"
+                    RotationY="180">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <itemTemplates:FlashCardCategoryItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectFlashCardCommand, Source={x:Reference Page}}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

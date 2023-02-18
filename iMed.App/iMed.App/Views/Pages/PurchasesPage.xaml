@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.PurchasesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:itemTemplates="clr-namespace:iMed.App.Views.ItemTemplates;assembly=iMed.App"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    x:Name="Page"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid HeightRequest="160" RowDefinitions="2*,*">
+            <Frame
+                Grid.Row="0"
+                Margin="-60,-60,-60,0"
+                BackgroundColor="{StaticResource AccentColor}"
+                Rotation="-10" />
+            <Frame
+                Grid.Row="0"
+                Margin="-60,-60,-60,0"
+                Background="{StaticResource PrimaryColor}"
+                Rotation="10" />
+            <Grid
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                RowDefinitions="Auto,*">
+                <StackLayout Grid.Row="1" Margin="0,-65,0,0">
+                    <Label
+                        FontFamily="{StaticResource ShabnameBold}"
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource PrimaryDarkColor}"
+                        VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding PageDto.User.FirstName}" />
+                                <Span Text=" " />
+                                <Span Text="{Binding PageDto.User.LastName}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+                <Grid Margin="0,15" ColumnDefinitions="*,Auto">
+                    <Label
+                        Margin="10,5"
+                        FontFamily="{StaticResource ShabnameBold}"
+                        FontSize="Large"
+                        Text="خریـــــدهای شما"
+                        TextColor="{StaticResource Gray-800}"
+                        VerticalOptions="Center" />
+                    <Button
+                        Grid.Column="1"
+                        Margin="15"
+                        Padding="0"
+                        BackgroundColor="#90333333"
+                        Command="{Binding BackNavigationCommand}"
+                        CornerRadius="30"
+                        FontFamily="{StaticResource MaterialFontFamily}"
+                        FontSize="28"
+                        HeightRequest="40"
+                        Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                        TextColor="White"
+                        WidthRequest="40" />
+                </Grid>
+            </Grid>
+        </Grid>
+        <StackLayout Grid.Row="1">
+
+            <StackLayout Margin="5">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label
+                        FontFamily="{StaticResource ShabnameBold}"
+                        FontSize="Body"
+                        Text="دوره های شما"
+                        TextColor="{StaticResource AccentColor}"
+                        VerticalOptions="Center" />
+                    <Button
+                        Grid.Column="1"
+                        Padding="0,-3,0,0"
+                        BackgroundColor="{StaticResource AccentColor}"
+                        CornerRadius="5"
+                        FontSize="Caption"
+                        HeightRequest="30"
+                        IsVisible="False"
+                        Text="بیشتر ..."
+                        TextColor="White" />
+                </Grid>
+                <CollectionView
+                    HeightRequest="160"
+                    ItemsSource="{Binding Path=PageDto.Courses}"
+                    RotationY="180">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <itemTemplates:CourseItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectVideoCommand, Source={x:Reference Page}}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.ItemTemplates.RateItemTemplate"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:renders="clr-namespace:iMed.App.Renders;assembly=iMed.App"
+    xmlns:xForms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms">
+    <ContentView.Content>
+
+        <Grid>
+            <Frame Margin="5" CornerRadius="8">
+                <StackLayout>
+                    <Grid Margin="0,0,0,0" ColumnDefinitions="*,Auto">
+                        <Label FontFamily="{StaticResource ShabnameBold}" Text="{Binding Author}" />
+                        <xForms:SfRating
+                            Grid.Column="1"
+                            ItemSize="15"
+                            Precision="Exact"
+                            Value="{Binding Score}">
+                            <xForms:SfRating.RatingSettings>
+                                <xForms:SfRatingSettings RatedFill="{StaticResource PrimaryColor}" />
+                            </xForms:SfRating.RatingSettings>
+                        </xForms:SfRating>
+                    </Grid>
+                    <renders:ExtendedLabel
+                        FontFamily="{StaticResource Shabname}"
+                        FontSize="Small"
+                        JustifyText="True"
+                        Text="{Binding RateMessage}" />
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

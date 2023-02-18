@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:itemTemplates="clr-namespace:iMed.App.Views.ItemTemplates;assembly=iMed.App"
+    xmlns:maskedEdit="clr-namespace:Syncfusion.XForms.MaskedEdit;assembly=Syncfusion.SfMaskedEdit.XForms"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:tabView="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:viewModels="clr-namespace:iMed.App.ViewModels;assembly=iMed.App"
+    xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+    x:Name="Page"
+    BackgroundColor="{StaticResource Gray-200}"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+
+
+    <tabView:SfTabView
+        DisplayMode="ImageWithText"
+        EnableSwiping="False"
+        TabHeaderBackgroundColor="Transparent"
+        TabHeaderPosition="Bottom"
+        TabHeight="50"
+        TabWidthMode="Default"
+        VisibleHeaderCount="3">
+        <tabView:SfTabView.SelectionIndicatorSettings>
+            <tabView:SelectionIndicatorSettings
+                AnimationDuration="250"
+                Position="Bottom"
+                StrokeThickness="2"
+                Color="{StaticResource PrimaryColor}" />
+        </tabView:SfTabView.SelectionIndicatorSettings>
+        <tabView:SfTabItem x:Name="homeTab" SelectionColor="{StaticResource PrimaryColor}">
+            <tabView:SfTabItem.HeaderContent>
+                <Grid>
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                        <Frame
+                            Margin="5"
+                            Padding="0"
+                            BackgroundColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference homeTab}}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HeightRequest="30"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="30">
+                            <Frame
+                                Margin="4"
+                                Padding="0"
+                                CornerRadius="20"
+                                HasShadow="False"
+                                HeightRequest="30"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="30">
+                                <Label
+                                    FontFamily="{StaticResource MaterialFontFamily}"
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Text="{x:Static model:MaterialIconFont.Home}"
+                                    TextColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference homeTab}}"
+                                    VerticalOptions="Center" />
+                            </Frame>
+                        </Frame>
+                        <Label
+                            Grid.Column="1"
+                            HorizontalOptions="Start"
+                            Text="خانه"
+                            TextColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference homeTab}}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Grid>
+            </tabView:SfTabItem.HeaderContent>
+            <tabView:SfTabItem.Content>
+
+                <Grid RowDefinitions="2*,3*">
+                    <Grid Margin="0,-15,0,0" RowDefinitions="2*,*">
+                        <Frame
+                            Grid.Row="0"
+                            Margin="-60,-60,-60,0"
+                            BackgroundColor="{StaticResource AccentColor}"
+                            Rotation="-10" />
+                        <Frame
+                            Grid.Row="0"
+                            Margin="-60,-60,-60,0"
+                            Background="{StaticResource PrimaryColor}"
+                            Rotation="10" />
+                        <Grid
+                            Grid.Row="0"
+                            Grid.RowSpan="2"
+                            RowDefinitions="Auto,*">
+                            <Grid Margin="0,15" ColumnDefinitions="*,Auto">
+                                <StackLayout
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Margin="10"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                    <Frame
+                                        Padding="5"
+                                        BackgroundColor="Transparent"
+                                        CornerRadius="60"
+                                        HorizontalOptions="Center">
+                                        <Image HeightRequest="50" Source="logoB.png" />
+                                    </Frame>
+                                </StackLayout>
+                                <Button
+                                    Grid.Column="1"
+                                    Margin="15"
+                                    Padding="0"
+                                    BackgroundColor="White"
+                                    Command="{Binding ProfileCommand}"
+                                    CornerRadius="30"
+                                    FontFamily="{StaticResource MaterialFontFamily}"
+                                    FontSize="28"
+                                    HeightRequest="50"
+                                    Text="{x:Static model:MaterialIconFont.Account}"
+                                    TextColor="{StaticResource PrimaryDarkColor}"
+                                    VerticalOptions="Center"
+                                    WidthRequest="50" />
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="6,-15,6,0">
+                                <CarouselView x:Name="sliderCarousel" ItemsSource="{Binding Path=PageDto.SpecialOffer}">
+                                    <CarouselView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:SliderItemTemplate TappedCommand="{Binding BindingContext.SelectSpecialOfferCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CarouselView.ItemTemplate>
+                                </CarouselView>
+                                <Frame
+                                    Margin="10"
+                                    Padding="4,4,15,4"
+                                    BackgroundColor="#444"
+                                    CornerRadius="50"
+                                    HorizontalOptions="Start"
+                                    IsVisible="false"
+                                    VerticalOptions="Start">
+                                    <StackLayout Orientation="Horizontal">
+
+                                        <Label
+                                            FontFamily="{StaticResource MaterialFontFamily}"
+                                            FontSize="25"
+                                            Text="{x:Static model:MaterialIconFont.StarCircle}"
+                                            TextColor="Gold"
+                                            VerticalOptions="Center" />
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            Text="پیشنهاد ویژه"
+                                            TextColor="Gold"
+                                            VerticalOptions="Center" />
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <ScrollView Grid.Row="1">
+                        <StackLayout Margin="15">
+                            <StackLayout>
+
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="جدیدترین دوره ها"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="160"
+                                    ItemsSource="{Binding Path=PageDto.RecentCourse}"
+                                    RotationY="180">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:CourseItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectVideoCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="جدیدترین فلش کارت ها"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="200"
+                                    ItemsSource="{Binding Path=PageDto.RecentFlashCards}"
+                                    RotationY="180"
+                                    SelectionMode="Single">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:FlashCardCategoryItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectFlashCardCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </ScrollView>
+                </Grid>
+            </tabView:SfTabItem.Content>
+        </tabView:SfTabItem>
+
+        <tabView:SfTabItem x:Name="videoTab" SelectionColor="{StaticResource PrimaryColor}">
+            <tabView:SfTabItem.HeaderContent>
+                <Grid>
+
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                        <Frame
+                            Margin="5"
+                            Padding="0"
+                            BackgroundColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference videoTab}}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HeightRequest="30"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="30">
+                            <Frame
+                                Margin="4"
+                                Padding="0"
+                                CornerRadius="20"
+                                HasShadow="False"
+                                HeightRequest="30"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="30">
+                                <Label
+                                    FontFamily="{StaticResource MaterialFontFamily}"
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Text="{x:Static model:MaterialIconFont.Video}"
+                                    TextColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference videoTab}}"
+                                    VerticalOptions="Center" />
+                            </Frame>
+                        </Frame>
+                        <Label
+                            HorizontalOptions="Start"
+                            Text="دوره ها"
+                            TextColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference videoTab}}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Grid>
+            </tabView:SfTabItem.HeaderContent>
+            <tabView:SfTabItem.Content>
+
+                <Grid RowDefinitions="Auto,*">
+                    <Grid>
+                        <textInputLayout:SfTextInputLayout
+                            Margin="15,15,15,0"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="جست جو کنید ...    "
+                            OutlineCornerRadius="8"
+                            UnfocusedColor="{StaticResource AccentColor}">
+                            <Entry
+                                ReturnCommand="{Binding SearchCommand}"
+                                ReturnCommandParameter="{Binding Path=Text, Source={RelativeSource Self}}"
+                                ReturnType="Search" />
+                        </textInputLayout:SfTextInputLayout>
+                    </Grid>
+
+                    <ScrollView Grid.Row="1" Margin="0,-15,0,0">
+                        <StackLayout Margin="15">
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="جدیدترین دوره ها"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                    <Button
+                                        Grid.Column="1"
+                                        Padding="0,-3,0,0"
+                                        BackgroundColor="{StaticResource AccentColor}"
+                                        CornerRadius="5"
+                                        FontSize="Caption"
+                                        HeightRequest="30"
+                                        IsVisible="False"
+                                        Text="بیشتر ..."
+                                        TextColor="White" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="160"
+                                    ItemsSource="{Binding Path=PageDto.RecentCourse}"
+                                    RotationY="180">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:CourseItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectVideoCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="محبوبــ ترین دوره ها"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="160"
+                                    HorizontalOptions="Start"
+                                    ItemsSource="{Binding Path=PageDto.PopularCourse}"
+                                    RotationY="180">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:CourseItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectVideoCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="دوره های خریداری شده"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="160"
+                                    ItemsSource="{Binding Path=PageDto.MineCourse}"
+                                    RotationY="180">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:CourseItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectVideoCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+
+                        </StackLayout>
+
+                    </ScrollView>
+                </Grid>
+            </tabView:SfTabItem.Content>
+        </tabView:SfTabItem>
+
+
+        <tabView:SfTabItem x:Name="flashCardTab" SelectionColor="{StaticResource PrimaryColor}">
+            <tabView:SfTabItem.HeaderContent>
+                <Grid>
+
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                        <Frame
+                            Margin="5"
+                            Padding="0"
+                            BackgroundColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference flashCardTab}}"
+                            CornerRadius="20"
+                            HasShadow="False"
+                            HeightRequest="30"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="30">
+                            <Frame
+                                Margin="4"
+                                Padding="0"
+                                CornerRadius="20"
+                                HasShadow="False"
+                                HeightRequest="30"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="30">
+                                <Label
+                                    FontFamily="{StaticResource MaterialFontFamily}"
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Text="{x:Static model:MaterialIconFont.Card}"
+                                    TextColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference flashCardTab}}"
+                                    VerticalOptions="Center" />
+                            </Frame>
+                        </Frame>
+                        <Label
+                            HorizontalOptions="Start"
+                            Text="فلش کارت"
+                            TextColor="{Binding Converter={StaticResource TabHeaderConverter}, Path=IsSelected, Source={x:Reference flashCardTab}}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Grid>
+            </tabView:SfTabItem.HeaderContent>
+            <tabView:SfTabItem.Content>
+                <Grid RowDefinitions="Auto,Auto,*">
+                    <Frame
+                        Margin="0,-20,0,0"
+                        Padding="15,35,15,15"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        CornerRadius="25">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackLayout>
+
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Large"
+                                    Text="جعبه لایتنر"
+                                    TextColor="{StaticResource AccentColor}" />
+                                <Label
+                                    Margin="0,-8,0,0"
+                                    Text="در جعبه لایتنر فلش کارت های خود را مدیریت کنید"
+                                    TextColor="{StaticResource AccentColor}" />
+                            </StackLayout>
+                            <Button
+                                Grid.Column="1"
+                                Padding="20,0,20,3"
+                                BackgroundColor="Transparent"
+                                BorderColor="White"
+                                BorderWidth="1"
+                                Command="{Binding LeitnerBoxCommand}"
+                                CornerRadius="25"
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Body"
+                                HeightRequest="35"
+                                Text="جعبه لایتنر من"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="LeitnerBoxPageTapGestureRecognizer_Tapped" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Grid Grid.Row="1">
+                        <textInputLayout:SfTextInputLayout
+                            Margin="15,-5,15,0"
+                            ContainerBackgroundColor="Transparent"
+                            ContainerType="Outlined"
+                            FlowDirection="RightToLeft"
+                            Hint="جست جو کنید ...    "
+                            OutlineCornerRadius="8"
+                            UnfocusedColor="{StaticResource AccentColor}">
+                            <Entry
+                                ReturnCommand="{Binding SearchCommand}"
+                                ReturnCommandParameter="{Binding Path=Text, Source={RelativeSource Self}}"
+                                ReturnType="Search" />
+                        </textInputLayout:SfTextInputLayout>
+                    </Grid>
+
+                    <ScrollView Grid.Row="2" Margin="0,-15,0,0">
+                        <StackLayout Margin="15">
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="جدیدترین فلش کارتــ ها"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                    <Button
+                                        Grid.Column="1"
+                                        Padding="0,-3,0,0"
+                                        BackgroundColor="{StaticResource AccentColor}"
+                                        CornerRadius="5"
+                                        FontSize="Caption"
+                                        HeightRequest="30"
+                                        IsVisible="False"
+                                        Text="بیشتر ..."
+                                        TextColor="White" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="200"
+                                    ItemsSource="{Binding Path=PageDto.RecentFlashCards}"
+                                    RotationY="180">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:FlashCardCategoryItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectFlashCardCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="محبوبــ ترین فلش کارتــ ها"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="200"
+                                    HorizontalOptions="Start"
+                                    ItemsSource="{Binding Path=PageDto.PopularFlashCards}"
+                                    RotationY="180">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:FlashCardCategoryItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectFlashCardCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        Text="فلش کارتــ های خریداری شده"
+                                        TextColor="{StaticResource AccentColor}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <CollectionView
+                                    HeightRequest="200"
+                                    ItemsSource="{Binding Path=PageDto.MineFlashCards}"
+                                    RotationY="180">
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <itemTemplates:FlashCardCategoryItemTemplate RotationY="-180" TappedCommand="{Binding Path=BindingContext.SelectFlashCardCommand, Source={x:Reference Page}}" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                </Grid>
+            </tabView:SfTabItem.Content>
+        </tabView:SfTabItem>
+
+    </tabView:SfTabView>
+</ContentPage>

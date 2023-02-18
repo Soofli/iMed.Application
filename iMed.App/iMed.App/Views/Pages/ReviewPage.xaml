@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.ReviewPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controllers="clr-namespace:iMed.App.Views.Controllers"
+    xmlns:enums="clr-namespace:iMed.Domain.Enums;assembly=iMed.Domain"
+    xmlns:itemTemplates="clr-namespace:iMed.App.Views.ItemTemplates;assembly=iMed.App"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:renders="clr-namespace:iMed.App.Renders"
+    x:Name="Page"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{StaticResource AccentColor}"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid>
+            <CarouselView
+                x:Name="CarouselView"
+                Margin="0,30,0,60"
+                IsSwipeEnabled="False"
+                ItemsSource="{Binding Path=PageDto.FlashCards}"
+                PeekAreaInsets="35"
+                Position="{Binding FlashCardsPosition}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid Margin="5,35,5,5">
+                                <Frame
+                                    Padding="10,35,10,25"
+                                    BackgroundColor="White"
+                                    CornerRadius="10">
+                                    <Grid RowDefinitions="*,Auto">
+                                        <ScrollView Grid.Row="0">
+
+                                            <StackLayout>
+                                                <Grid Margin="0,10,0,0">
+                                                    <BoxView
+                                                        Margin="0,5,0,0"
+                                                        BackgroundColor="{StaticResource Gray-300}"
+                                                        HeightRequest="1"
+                                                        VerticalOptions="Center" />
+                                                    <StackLayout
+                                                        Padding="15,0"
+                                                        BackgroundColor="White"
+                                                        HorizontalOptions="Center">
+                                                        <Label
+                                                            FontFamily="{StaticResource ShabnameBold}"
+                                                            FontSize="Body"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding FlashCardCategoryName}" />
+                                                        <Label
+                                                            Margin="0,-5,0,0"
+                                                            FontFamily="{StaticResource Shabname}"
+                                                            FontSize="Body"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding FlashCardTagName}" />
+                                                    </StackLayout>
+                                                </Grid>
+                                                <renders:ExtendedLabel
+                                                    Margin="3,15,3,5"
+                                                    FontFamily="{StaticResource Shabname}"
+                                                    FontSize="Medium"
+                                                    JustifyText="True"
+                                                    Text="{Binding Question}" />
+                                                <StackLayout Margin="0,15,0,0" BindableLayout.ItemsSource="{Binding FlashCardAnswers}">
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <itemTemplates:AnswerItemTemplate
+                                                                IsEnabled="{Binding IsEnabled}"
+                                                                IsSelected="{Binding IsSelected}"
+                                                                SelectCommand="{Binding BindingContext.SelectAnswerCommand, Source={x:Reference Page}}"
+                                                                ShowResult="{Binding ShowResult}" />
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </StackLayout>
+
+
+                                                <StackLayout IsVisible="{Binding ShowLongAnswer}">
+                                                    <Grid Margin="0,10,0,0">
+                                                        <BoxView
+                                                            Margin="0,5,0,0"
+                                                            BackgroundColor="{StaticResource Gray-300}"
+                                                            HeightRequest="1"
+                                                            VerticalOptions="Center" />
+                                                        <StackLayout
+                                                            Padding="15,0"
+                                                            BackgroundColor="White"
+                                                            HorizontalOptions="Center"
+                                                            Orientation="Horizontal">
+                                                            <Label
+                                                                FontFamily="{StaticResource ShabnameBold}"
+                                                                FontSize="Body"
+                                                                HorizontalOptions="Center"
+                                                                Text="پــــــاسخ" />
+                                                        </StackLayout>
+                                                    </Grid>
+                                                    <controllers:LabelUi
+                                                        Margin="3,15,3,5"
+                                                        BGColor="White"
+                                                        FlowDirection="RightToLeft"
+                                                        HorizontalOptions="Start"
+                                                        Text="{Binding LongAnswer}" />
+                                                </StackLayout>
+
+                                            </StackLayout>
+                                        </ScrollView>
+                                        <StackLayout Grid.Row="1">
+
+                                            <Button
+                                                Margin="0,35,0,0"
+                                                Background="{AppThemeBinding Light={StaticResource Info},
+                                                                             Dark={StaticResource Gray-900}}"
+                                                BorderColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                                              Dark={StaticResource Info}}"
+                                                BorderWidth="1"
+                                                Command="{Binding BindingContext.NextFlashCardCommand, Source={x:Reference Page}}"
+                                                CornerRadius="35"
+                                                FontFamily="{StaticResource ShabnameBold}"
+                                                IsVisible="{Binding BindingContext.NextAnswerVisible, Source={x:Reference Page}}"
+                                                Text="بعدی"
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                                            Dark={StaticResource Info}}" />
+                                            <Button
+                                                Margin="0,35,0,0"
+                                                Background="{AppThemeBinding Light={StaticResource Green},
+                                                                             Dark={StaticResource Gray-900}}"
+                                                BorderColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                                              Dark={StaticResource Green}}"
+                                                BorderWidth="1"
+                                                Command="{Binding BindingContext.SubmitAnswerCommand, Source={x:Reference Page}}"
+                                                CommandParameter="{Binding .}"
+                                                CornerRadius="35"
+                                                FontFamily="{StaticResource ShabnameBold}"
+                                                IsVisible="{Binding BindingContext.SubmitAnswerVisible, Source={x:Reference Page}}"
+                                                Text="ثبت پاسخ ها"
+                                                TextColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                                            Dark={StaticResource Green}}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                                <StackLayout
+                                    Margin="0,-23,0,0"
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal"
+                                    VerticalOptions="Start">
+
+
+                                    <Frame
+                                        Margin="0,6,0,0"
+                                        Padding="15,4,15,6"
+                                        BackgroundColor="{StaticResource Gray-200}"
+                                        CornerRadius="35"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Medium"
+                                            Text="{Binding FlashCardStatus, Converter={StaticResource EnumToNameConverter}}"
+                                            TextColor="{StaticResource Gray-700}" />
+                                    </Frame>
+                                    <Frame
+                                        Padding="15,8,15,11"
+                                        BackgroundColor="{StaticResource PrimaryColor}"
+                                        CornerRadius="35"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontFamily="{StaticResource ShabnameBold}"
+                                            FontSize="Medium"
+                                            Text="{Binding FlashCardType, Converter={StaticResource EnumToNameConverter}}"
+                                            TextColor="White" />
+                                    </Frame>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <StackLayout
+                Margin="15,0,15,20"
+                BindableLayout.ItemsSource="{Binding Path=PageDto.FlashCards}"
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                VerticalOptions="End">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Margin="-1"
+                            Padding="3,3"
+                            Background="{Binding IsSelected, Converter={StaticResource BoolToFItemBackgroundColorConverter}}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+            <Grid
+                Margin="0,0,50,50"
+                HorizontalOptions="Start"
+                VerticalOptions="End">
+                <Frame
+                    Margin="0,0,35,0"
+                    Padding="55,2,13,4"
+                    BorderColor="{StaticResource Red}"
+                    CornerRadius="50"
+                    VerticalOptions="Center">
+                    <StackLayout>
+                        <Label
+                            Margin="0,0,0,0"
+                            FontFamily="{StaticResource IranSansULight}"
+                            FontSize="16"
+                            Text="توقفـــ مرور"
+                            TextColor="{StaticResource Red}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Frame>
+                <Frame
+                    Padding="7,2"
+                    BackgroundColor="{StaticResource Red}"
+                    CornerRadius="50"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                        <Label
+                            FontFamily="{StaticResource FontAwsomeFontFamily}"
+                            FontSize="20"
+                            Text="{x:Static model:FaIconFont.StopCircle}"
+                            TextColor="{StaticResource Gray-100}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="0,2,0,0"
+                            FontFamily="{StaticResource IranSansULight}"
+                            FontSize="16"
+                            Text="{Binding TimeElapsedCounter}"
+                            TextColor="{StaticResource Gray-100}"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Frame>
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="PauseTapGestureRecognizer_Tapped" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Frame
+                Margin="50,0,0,50"
+                Padding="10,2,10,4"
+                BorderColor="{StaticResource Warning}"
+                CornerRadius="50"
+                HorizontalOptions="End"
+                VerticalOptions="End">
+                <StackLayout>
+                    <Label
+                        Margin="0,0,0,0"
+                        FontFamily="{StaticResource IranSansULight}"
+                        FontSize="16"
+                        Text="آرشیو کردن"
+                        TextColor="{StaticResource Warning}"
+                        VerticalOptions="Center" />
+                </StackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Archive_Tapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+            <Frame BackgroundColor="#99222222" IsVisible="{Binding DontStartIsVisible}">
+                <Grid>
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsPause, Converter={StaticResource InvertedBoolConverter}}"
+                        VerticalOptions="Center">
+                        <Frame Padding="40,20,40,33" CornerRadius="8">
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Title"
+                                HorizontalOptions="Center"
+                                Text="مرور شروع شود ؟" />
+                        </Frame>
+                        <StackLayout
+                            Margin="0,-25,0,0"
+                            HorizontalOptions="Center"
+                            Orientation="Horizontal">
+
+                            <Button
+                                Padding="35,0,35,5"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Green},
+                                                                  Dark={StaticResource GreenDark}}"
+                                Command="{Binding StartReviewCommand}"
+                                CornerRadius="40"
+                                FontSize="Large"
+                                HorizontalOptions="Center"
+                                Text="بلی"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Button
+                                Padding="35,0,35,5"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Red},
+                                                                  Dark={StaticResource RedDark}}"
+                                Command="{Binding StopReviewCommand}"
+                                CornerRadius="40"
+                                FontSize="Large"
+                                HorizontalOptions="Center"
+                                Text="خیر"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsPause}"
+                        VerticalOptions="Center">
+                        <Frame Padding="40,20,40,33" CornerRadius="8">
+                            <Label
+                                Margin="-25,0"
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Title"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="مرور متوقف شده است ، آیا میخواهید ادامه دهید ؟" />
+                        </Frame>
+                        <StackLayout
+                            Margin="0,-25,0,0"
+                            HorizontalOptions="Center"
+                            Orientation="Horizontal">
+
+                            <Button
+                                Padding="35,0,35,5"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Green},
+                                                                  Dark={StaticResource GreenDark}}"
+                                Command="{Binding StartReviewCommand}"
+                                CornerRadius="40"
+                                FontSize="Large"
+                                HorizontalOptions="Center"
+                                Text="بلی"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Button
+                                Padding="35,0,35,5"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource Red},
+                                                                  Dark={StaticResource RedDark}}"
+                                Command="{Binding StopReviewCommand}"
+                                CornerRadius="40"
+                                FontSize="Large"
+                                HorizontalOptions="Center"
+                                Text="خیر"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+            <Frame BackgroundColor="#99222222" IsVisible="{Binding ShowResult}">
+                <StackLayout VerticalOptions="Center">
+
+                    <Frame Padding="40,10,40,33" CornerRadius="8">
+                        <StackLayout>
+
+                            <Label
+                                Margin="0,12,0,25"
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Title"
+                                HorizontalOptions="Center"
+                                Text="مرور به اتمام رسید" />
+                            <Grid>
+                                <BoxView
+                                    BackgroundColor="{StaticResource Gray-300}"
+                                    HeightRequest="1"
+                                    VerticalOptions="Center" />
+                                <StackLayout
+                                    Padding="15,0"
+                                    BackgroundColor="{StaticResource Gray-White}"
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Title"
+                                        Text="{Binding AllFlashCardCount}" />
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="فلش کارتـــ"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </Grid>
+                            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                <Label
+                                    Text="جواب صحیح : "
+                                    TextColor="{StaticResource Green}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Large"
+                                    Text="{Binding TrueAnswerCount}"
+                                    TextColor="{StaticResource Green}" />
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                <Label
+                                    Text="جواب غلط : "
+                                    TextColor="{StaticResource Red}"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Large"
+                                    Text="{Binding FalseAnswerCount}"
+                                    TextColor="{StaticResource Red}" />
+                            </StackLayout>
+
+                            <Grid>
+                                <BoxView
+                                    BackgroundColor="{StaticResource Gray-300}"
+                                    HeightRequest="1"
+                                    VerticalOptions="Center" />
+                                <StackLayout
+                                    Padding="15,0"
+                                    BackgroundColor="{StaticResource Gray-White}"
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Title"
+                                        Text="{Binding TimeElapsedSecond}" />
+                                    <Label
+                                        FontSize="Medium"
+                                        Text="ثانیه"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </Frame>
+                    <Frame
+                        Margin="0,-25,0,0"
+                        Padding="0,12,0,25"
+                        BackgroundColor="{StaticResource Warning}"
+                        CornerRadius="8">
+
+                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Title"
+                                Text="{Binding TotalScore}"
+                                TextColor="{StaticResource Gray-800}" />
+                            <Label
+                                FontSize="Medium"
+                                Text="امتیاز کسب کردید "
+                                TextColor="{StaticResource Gray-800}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </Frame>
+                    <Button
+                        Margin="0,-25,0,0"
+                        Padding="35,0,35,5"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource AccentColor},
+                                                          Dark={StaticResource AccentDarkColor}}"
+                        Command="{Binding FinishReviewCommand}"
+                        CornerRadius="40"
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="بستن"
+                        TextColor="White"
+                        VerticalOptions="Center" />
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

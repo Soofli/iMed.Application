@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="iMed.App.Views.Themes.ElementsTheme"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:materialFrame="http://sharpnado.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:themes1="clr-namespace:iMed.App.Views.Themes;assembly=iMed.App">
+
+    <ResourceDictionary.MergedDictionaries>
+        <themes1:MainTheme />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray-300}" />
+    </Style>
+
+    <Style TargetType="materialFrame:MaterialFrame">
+        <Setter Property="MaterialTheme" Value="Acrylic" />
+        <Setter Property="Margin" Value="5, 5, 5, 10" />
+        <Setter Property="Padding" Value="20,15" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="LightThemeBackgroundColor" Value="{StaticResource AcrylicFrameBackgroundColor}" />
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource Shabname}" />
+    </Style>
+
+    <Style TargetType="textInputLayout:SfTextInputLayout">
+        <Setter Property="ContainerBackgroundColor" Value="Transparent" />
+        <Setter Property="ContainerType" Value="Outlined" />
+        <Setter Property="OutlineCornerRadius" Value="8" />
+        <Setter Property="FlowDirection" Value="RightToLeft" />
+        <Setter Property="ErrorLabelStyle">
+            <Setter.Value>
+                <textInputLayout:LabelStyle FontFamily="{StaticResource Shabname}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HintLabelStyle">
+            <Setter.Value>
+                <textInputLayout:LabelStyle FontFamily="{StaticResource Shabname}" FontSize="16" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

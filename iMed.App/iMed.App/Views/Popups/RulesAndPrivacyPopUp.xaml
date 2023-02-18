@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.Popups.RulesAndPrivacyPopUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Margin="20,0"
+    FlowDirection="RightToLeft"
+    VerticalOptions="Center">
+    <ContentView.Content>
+        <Frame
+            Padding="8"
+            BackgroundColor="{StaticResource Gray-100}"
+            CornerRadius="10">
+            <StackLayout>
+                <Label
+                    Margin="5,5"
+                    FontFamily="{StaticResource ShabnameBold}"
+                    FontSize="Large"
+                    Text="قوانین و استفاده از خدمات و حریم خصوصی" />
+                <BoxView BackgroundColor="{StaticResource Gray-300}" HeightRequest="1" />
+                <Label
+                    Margin="10,0,10,0"
+                    FontSize="Default"
+                    HorizontalOptions="Center"
+                    Text="آیمد با تاکید بر احترامی که برای حریم شخصی کاربران قائل است، برای سفارش، ثبت نظر یا استفاده از برخی امکانات نرم افزار اطلاعاتی را از کاربران درخواست می‌کند تا بتواند خدماتی امن و مطمئن را به کابران ارائه دهد. برای نمونه می‌توان به اطلاعاتی مانند ایمیل، شماره همراه، نام و ...  اشاره نمود. لازم به ذکر است تمام مکاتبات آیمد از طریق ایمیل و شماره همراهی که مخاطب در پروفایل خود ثبت می‌کند، صورت می‌گیرد.                     " />
+                <Label
+                    Margin="10,0,10,0"
+                    FontSize="Default"
+                    HorizontalOptions="Center"
+                    Text="لازم به ذکر است، حفظ و نگهداری رمز عبور بر عهده مخاطب می‌باشد و لذا برای جلوگیری از هرگونه سوء استفاده احتمالی، کاربران نباید آن اطلاعات را برای شخص دیگری فاش کنند. آیمد هویت شخصی مخاطبان را محرمانه می‌داند و اطلاعات شخصی آنان را به هیچ شخص یا سازمان دیگری منتقل نمی‌کند." />
+                <Label
+                    Margin="10,0,10,0"
+                    FontSize="Default"
+                    HorizontalOptions="Center"
+                    Text="آیمد برای حفاظت و نگهداری اطلاعات و حریم شخصی کاربران همه توان خود را به کار می‌گیرد و امیدوار است که تجربه‌ی خریدی امن، راحت و خوشایند را برای همه مخاطبان فراهم آورد." />
+                <Label
+                    Margin="10,0,10,0"
+                    FontSize="Default"
+                    HorizontalOptions="Center"
+                    Text="آیمد برای اطلاع رسانی جشنواره‌ها، انتشار آموزش‌های جدید و ... برای مخاطبان سایت ایمیل یا پیامک ارسال می‌کند. در صورتی که مخاطب تمایل به دریافت اینگونه ایمیل‌ها نداشته باشند می‌توانند با استفاده از لینک مربوط به لغو اشتراک خبرنامه موجود در انتهای ایمیل دریافتی، اقدام نمایند." />
+
+                <Button
+                    Background="{StaticResource Green}"
+                    Clicked="AcceptButton_OnClicked"
+                    CornerRadius="8"
+                    Text="می پذیرم"
+                    TextColor="White" />
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

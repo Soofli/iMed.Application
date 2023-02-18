@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="iMed.App.Views.Popups.FlashCardPopUp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controllers="clr-namespace:iMed.App.Views.Controllers"
+    xmlns:model="clr-namespace:iMed.App.Models"
+    xmlns:renders="clr-namespace:iMed.App.Renders"
+    FlowDirection="RightToLeft"
+    HorizontalOptions="Center"
+    VerticalOptions="Center">
+    <ContentView.Content>
+
+        <Grid Margin="20,35,20,20">
+            <Frame
+                Padding="10,35,10,10"
+                BackgroundColor="White"
+                CornerRadius="10">
+                <Grid RowDefinitions="Auto,*">
+
+                    <ScrollView VerticalScrollBarVisibility="Always">
+                        <StackLayout>
+                            <Grid Margin="0,10,0,0">
+                                <BoxView
+                                    Margin="0,5,0,0"
+                                    BackgroundColor="{StaticResource Gray-300}"
+                                    HeightRequest="1"
+                                    VerticalOptions="Center" />
+                                <StackLayout
+                                    Padding="15,0"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center">
+                                    <Label
+                                        x:Name="categoryLabel"
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Body"
+                                        HorizontalOptions="Center" />
+                                    <Label
+                                        x:Name="tagLabel"
+                                        Margin="0,-5,0,0"
+                                        FontFamily="{StaticResource Shabname}"
+                                        FontSize="Body"
+                                        HorizontalOptions="Center" />
+                                </StackLayout>
+                            </Grid>
+                            <renders:ExtendedLabel
+                                x:Name="questionLabel"
+                                Margin="0,15,0,5"
+                                FontFamily="{StaticResource Shabname}"
+                                FontSize="Medium"
+                                JustifyText="True" />
+
+                            <Grid Margin="0,10,0,0">
+                                <BoxView
+                                    Margin="0,5,0,0"
+                                    BackgroundColor="{StaticResource Gray-300}"
+                                    HeightRequest="1"
+                                    VerticalOptions="Center" />
+                                <StackLayout
+                                    Padding="15,0"
+                                    BackgroundColor="White"
+                                    HorizontalOptions="Center"
+                                    Orientation="Horizontal">
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Body"
+                                        HorizontalOptions="Center"
+                                        Text="پــــــاسخ" />
+                                </StackLayout>
+                            </Grid>
+                            <controllers:LabelUi
+                                x:Name="longAnswerLabel"
+                                Margin="3,15,3,5"
+                                BackgroundColor="White"
+                                FlowDirection="RightToLeft"
+                                HorizontalOptions="Start" />
+
+                        </StackLayout>
+                    </ScrollView>
+                </Grid>
+            </Frame>
+            <Frame
+                Margin="0,-20,0,0"
+                Padding="15,8"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                CornerRadius="35"
+                HorizontalOptions="Center"
+                VerticalOptions="Start">
+                <Label
+                    x:Name="typeLabel"
+                    FontFamily="{StaticResource ShabnameBold}"
+                    FontSize="Large"
+                    TextColor="White" />
+            </Frame>
+            <Button
+                Margin="8,-15,8,0"
+                Padding="0,0"
+                BackgroundColor="{StaticResource Red}"
+                Clicked="CloseButton_Clicked"
+                CornerRadius="8"
+                FontFamily="{StaticResource MaterialFontFamily}"
+                FontSize="Medium"
+                HeightRequest="30"
+                HorizontalOptions="End"
+                Text="{x:Static model:MaterialIconFont.Close}"
+                TextColor="White"
+                VerticalOptions="Start"
+                WidthRequest="40" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

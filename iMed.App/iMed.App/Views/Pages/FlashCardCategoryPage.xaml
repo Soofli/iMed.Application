@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="iMed.App.Views.Pages.FlashCardCategoryPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controllers="clr-namespace:iMed.App.Views.Controllers"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:itemTemplates="clr-namespace:iMed.App.Views.ItemTemplates;assembly=iMed.App"
+    xmlns:model="clr-namespace:iMed.App.Models;assembly=iMed.App"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:renders="clr-namespace:iMed.App.Renders;assembly=iMed.App"
+    xmlns:xForms="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+    x:Name="Page"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{StaticResource Gray-200}"
+    FlowDirection="RightToLeft"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="2*,7*">
+        <Grid>
+            <Frame Padding="0" HasShadow="False">
+                <Grid>
+                    <forms:CachedImage Aspect="AspectFill" Source="{Binding Path=PageDto.FlashCardCategory.ImageFileName, Converter={StaticResource ImageUrlConverter}}" />
+                    <Frame
+                        Padding="15,15,15,60"
+                        BackgroundColor="#99000000"
+                        HasShadow="False">
+                        <Grid Margin="0,15,133,0" RowDefinitions="Auto,*,Auto">
+
+                            <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                                <StackLayout>
+                                    <Label
+                                        FontFamily="{StaticResource ShabnameBold}"
+                                        FontSize="Medium"
+                                        Text="{Binding Path=PageDto.FlashCardCategory.Name}"
+                                        TextColor="White" />
+                                    <Label
+                                        Margin="0,-8"
+                                        Text="{Binding Path=PageDto.FlashCardCategory.Author}"
+                                        TextColor="White" />
+
+                                    <xForms:SfRating
+                                        Margin="0,10"
+                                        HorizontalOptions="Start"
+                                        ItemCount="5"
+                                        ItemSize="25"
+                                        ItemSpacing="5"
+                                        Precision="Exact"
+                                        ReadOnly="True"
+                                        Rotation="180"
+                                        VerticalOptions="End"
+                                        Value="{Binding Path=PageDto.FlashCardCategory.RateAvg}">
+
+                                        <xForms:SfRating.RatingSettings>
+                                            <xForms:SfRatingSettings
+                                                RatedFill="#f39c12"
+                                                RatedStroke="Transparent"
+                                                RatedStrokeWidth="3"
+                                                UnRatedFill="#45ffffff"
+                                                UnRatedStroke="LightGray"
+                                                UnRatedStrokeWidth="2" />
+                                        </xForms:SfRating.RatingSettings>
+                                    </xForms:SfRating>
+                                </StackLayout>
+                            </Grid>
+                            <Button
+                                Margin="5,-30,5,5"
+                                Padding="8"
+                                BackgroundColor="#90333333"
+                                Command="{Binding BackNavigationCommand}"
+                                CornerRadius="30"
+                                FontFamily="{StaticResource MaterialFontFamily}"
+                                FontSize="28"
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                Text="{x:Static model:MaterialIconFont.ChevronLeft}"
+                                TextColor="White"
+                                VerticalOptions="Center"
+                                WidthRequest="40" />
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </Frame>
+        </Grid>
+        <Frame
+            Grid.Row="1"
+            Margin="0,-45,0,0"
+            Padding="0"
+            BackgroundColor="{StaticResource Gray-200}"
+            CornerRadius="15">
+            <ScrollView>
+                <StackLayout>
+
+                    <Grid Margin="8,8,143,8" ColumnDefinitions="*,2*">
+                        <Frame
+                            Padding="5"
+                            Background="{StaticResource PrimaryColor}"
+                            CornerRadius="25"
+                            IsVisible="{Binding NotPurchaseVisible}">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="0,-4,-10,0"
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Body"
+                                    HorizontalOptions="Center"
+                                    Text="خریــــد"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="PurchaseTapGestureRecognizer_OnTapped" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame
+                            Grid.Column="1"
+                            Padding="15,8"
+                            Background="{StaticResource AccentColor}"
+                            CornerRadius="25"
+                            IsVisible="{Binding NotPurchaseVisible}">
+                            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                <Label
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Body"
+                                    Text="{Binding PageDto.FlashCardCategory.Price, StringFormat='{0:N0}'}"
+                                    TextColor="White" />
+                                <Label
+                                    FontFamily="{StaticResource Shabname}"
+                                    FontSize="Caption"
+                                    Text="تومان"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                        </Frame>
+
+                        <Frame
+                            Grid.Column="1"
+                            Padding="5"
+                            BorderColor="{StaticResource PrimaryColor}"
+                            CornerRadius="25"
+                            IsVisible="{Binding PurchaseVisible}">
+                            <Grid ColumnDefinitions="Auto,*">
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="0,-4,-10,0"
+                                    FontFamily="{StaticResource ShabnameBold}"
+                                    FontSize="Body"
+                                    HorizontalOptions="Center"
+                                    Text="جعبه لایتنر"
+                                    TextColor="{StaticResource PrimaryColor}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="LeinterBoxTapGestureRecognizer_Tapped" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <Frame
+                            Grid.Column="0"
+                            Padding="15,5"
+                            BackgroundColor="{StaticResource Info}"
+                            CornerRadius="25"
+                            IsVisible="{Binding PurchaseVisible}">
+                            <Label
+                                FontFamily="{StaticResource MaterialFontFamily}"
+                                FontSize="25"
+                                HorizontalOptions="Center"
+                                Text="{x:Static model:MaterialIconFont.CheckBold}"
+                                TextColor="{StaticResource Gray-100}" />
+                        </Frame>
+
+                    </Grid>
+                    <Grid Margin="0,15,0,8" ColumnDefinitions="*,Auto,*">
+                        <StackLayout HorizontalOptions="Center">
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Title"
+                                HorizontalOptions="Center"
+                                Text="{Binding Path=PageDto.FlashCardCount}"
+                                TextColor="{StaticResource PrimaryColor}" />
+                            <Label
+                                Margin="0,-8,0,0"
+                                FontSize="Medium"
+                                HorizontalOptions="Center"
+                                Text="فلش کارت" />
+                        </StackLayout>
+                        <BoxView
+                            Grid.Column="1"
+                            Background="{StaticResource PrimaryDarkColor}"
+                            Opacity="0.5"
+                            WidthRequest="1" />
+
+                        <StackLayout Grid.Column="2" HorizontalOptions="Center">
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Title"
+                                HorizontalOptions="Center"
+                                Text="{Binding Path=PageDto.FlashCardTagCount}"
+                                TextColor="{StaticResource PrimaryColor}" />
+                            <Label
+                                Margin="0,-8,0,0"
+                                FontSize="Medium"
+                                HorizontalOptions="Center"
+                                Text="فصل آموزشی" />
+                        </StackLayout>
+                    </Grid>
+                    <StackLayout>
+                        <controllers:LabelUi
+                            Margin="0,-5,5,0"
+                            BGColor="{StaticResource Gray-200}"
+                            Text="{Binding Path=PageDto.FlashCardCategory.Detail}" />
+                    </StackLayout>
+                    <CollectionView
+                        Margin="0,5,0,0"
+                        HeightRequest="90"
+                        ItemsSource="{Binding Path=PageDto.FlashCardTags}"
+                        RotationY="180">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid RotationY="-180">
+                                    <Grid Margin="5">
+                                        <Frame
+                                            Padding="8,4"
+                                            CornerRadius="6"
+                                            HeightRequest="80">
+                                            <Grid RowDefinitions="*,Auto,*">
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Margin="0,5,0,0"
+                                                    FontSize="Small"
+                                                    HorizontalOptions="Center"
+                                                    LineBreakMode="TailTruncation"
+                                                    Text="{Binding Name}"
+                                                    VerticalOptions="Center" />
+                                                <BoxView
+                                                    Grid.Row="1"
+                                                    Margin="8,0"
+                                                    BackgroundColor="{StaticResource Gray-200}"
+                                                    HeightRequest="1" />
+                                                <StackLayout
+                                                    Grid.Row="2"
+                                                    Margin="5,0"
+                                                    HorizontalOptions="Center"
+                                                    Orientation="Horizontal"
+                                                    VerticalOptions="Center">
+                                                    <Label
+                                                        Margin="-2,-3,-2,0"
+                                                        FontFamily="{StaticResource ShabnameBold}"
+                                                        FontSize="Medium"
+                                                        Text="{Binding FlashCardCount}"
+                                                        TextColor="{StaticResource PrimaryColor}" />
+                                                    <Label
+                                                        FontSize="11"
+                                                        HorizontalOptions="Center"
+                                                        LineBreakMode="TailTruncation"
+                                                        Text="فلش کارتـ" />
+                                                </StackLayout>
+                                            </Grid>
+                                        </Frame>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <Grid Margin="10,8" ColumnDefinitions="Auto,*,Auto,Auto">
+                        <Label
+                            FontFamily="{StaticResource ShabnameBold}"
+                            FontSize="Medium"
+                            Text="نظراتــــ کاربران"
+                            TextColor="{StaticResource Gray-600}"
+                            VerticalOptions="Center" />
+                        <BoxView
+                            Grid.Column="1"
+                            BackgroundColor="DimGray"
+                            HeightRequest="1"
+                            Opacity="0.2"
+                            VerticalOptions="Center" />
+                        <StackLayout Grid.Column="2" Orientation="Horizontal">
+                            <Label
+                                FontFamily="{StaticResource ShabnameBold}"
+                                FontSize="Title"
+                                Text="{Binding Path=PageDto.RatesCount}"
+                                TextColor="{StaticResource PrimaryDarkColor}" />
+                            <Label
+                                FontSize="Medium"
+                                Text="نظر"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+
+                        <Button
+                            Grid.Column="3"
+                            Padding="0,0,0,2"
+                            Background="{AppThemeBinding Light={StaticResource AccentColor},
+                                                         Dark={StaticResource AccentDarkColor}}"
+                            Command="{Binding AddRateCommand}"
+                            CornerRadius="25"
+                            FontSize="Caption"
+                            HeightRequest="35"
+                            IsVisible="{Binding PurchaseVisible}"
+                            Text="نظر دادن"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray-100},
+                                                        Dark={StaticResource Gray-Black}}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <StackLayout BindableLayout.ItemsSource="{Binding Path=PageDto.Rates}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <itemTemplates:RateItemTemplate />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+        <Frame
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Margin="25"
+            Padding="0"
+            CornerRadius="10"
+            HeightRequest="160"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            WidthRequest="110">
+
+            <forms:CachedImage Aspect="AspectFill" Source="{Binding Path=PageDto.FlashCardCategory.ImageFileName, Converter={StaticResource ImageUrlConverter}}" />
+        </Frame>
+    </Grid>
+</ContentPage>

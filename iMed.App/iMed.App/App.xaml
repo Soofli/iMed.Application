@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication
+    x:Class="iMed.App.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:iMed.App.Converters;assembly=iMed.App"
+    xmlns:converters1="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:enums="clr-namespace:iMed.Domain.Enums;assembly=iMed.Domain"
+    xmlns:materialFrame="http://sharpnado.com"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:themes="clr-namespace:iMed.App.Views.Themes;assembly=iMed.App">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="{StaticResource Shabname}" />
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AccentColor}, Dark={StaticResource AccentColor}}" />
+            </Style>
+
+
+            <x:Array x:Key="Datas" Type="{x:Type x:String}">
+                <x:String>01</x:String>
+                <x:String>02</x:String>
+                <x:String>03</x:String>
+                <x:String>04</x:String>
+                <x:String>05</x:String>
+                <x:String>06</x:String>
+            </x:Array>
+
+            <converters:DoubleToRoundConverter x:Key="DoubleToRoundConverter" />
+            <converters:BoolToBackgroundColorConverter
+                x:Key="BoolToBackgroundColorConverter"
+                FalseColor="#ebecef"
+                TrueColor="#577590" />
+            <converters:BoolToTextColorConverter
+                x:Key="BoolToTextColorConverter"
+                FalseColor="#444"
+                TrueColor="White" />
+
+            <converters:BoolToBackgroundColorConverter
+                x:Key="BoolToTransBackgroundColorConverter"
+                FalseColor="Transparent"
+                TrueColor="#577590" />
+            <converters:BoolToBackgroundColorConverter
+                x:Key="BoolToFItemBackgroundColorConverter"
+                FalseColor="#b2b8c2"
+                TrueColor="White" />
+
+            <converters:TabHeaderSelectedToColorConverter x:Key="TabHeaderConverter" />
+            <converters:EnumToNameConverter x:Key="EnumToNameConverter" />
+            <converters:DateTimeToRemainingConverter x:Key="DateTimeToRemainingConverter" />
+            <converters:ImageUrlConverter x:Key="ImageUrlConverter" />
+            <converters1:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+            <converters1:BoolToObjectConverter
+                x:Key="BoolToStrConverter"
+                FalseObject="False"
+                TrueObject="True" />
+            <converters1:EnumToBoolConverter x:Key="FlashCardTypeToBoolConverter">
+                <converters1:EnumToBoolConverter.TrueValues>
+                    <enums:FlashCardType>MultiAnswer</enums:FlashCardType>
+                    <enums:FlashCardType>MultiAnswer</enums:FlashCardType>
+                </converters1:EnumToBoolConverter.TrueValues>
+            </converters1:EnumToBoolConverter>
+            <ResourceDictionary.MergedDictionaries>
+                <themes:MainTheme />
+                <themes:ElementsTheme />
+            </ResourceDictionary.MergedDictionaries>
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+</prism:PrismApplication>

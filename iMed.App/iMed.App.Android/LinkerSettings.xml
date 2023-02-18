@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<linker>
+	<!--
+      For more information see the docs on creating custom Linker Settings
+      https://docs.microsoft.com/en-us/xamarin/cross-platform/deploy-test/linker
+  -->
+	<assembly fullname="Essential.Interfaces">
+		<type fullname="Xamarin.Essentials.Implementation.AppInfoImplementation">
+			<method name=".ctor" />
+		</type>
+	</assembly>
+	<assembly fullname="iMed.App" />
+	<assembly fullname="iMed.Domain" />
+	<assembly fullname="iMed.Common" />
+	<assembly fullname="MediaManager" />
+
+	<assembly fullname="MD.PersianDateTime.Standard" />
+	<assembly fullname="Newtonsoft.Json" />
+	<assembly fullname="System.ComponentModel.Annotations" />
+	<assembly fullname="System.IdentityModel.Tokens.Jwt" />
+	<assembly fullname="Prism" />
+	<assembly fullname="Prism.Forms" />
+	<assembly fullname="Prism.DryIoc.Forms" />
+	<assembly fullname="DryIoc" />
+	<assembly fullname="MD.PersianDateTime.Standard" />
+	<assembly fullname="MediaManager" />
+	<assembly fullname="FFImageLoading" />
+	<assembly fullname="Xamarin.CommunityToolkit" />
+	<assembly fullname="Rg.Plugins.Popup"/>
+	<assembly fullname="Sharpnado.MaterialFrame"/>
+	<assembly fullname="System.Core"/>
+	<assembly fullname="Mapster"/>
+	<assembly fullname="Mapster.Core"/>
+	<assembly fullname="Microsoft.Extensions.Identity.Stores"/>
+
+	<assembly fullname="Rg.Plugins.Popup">
+		<type fullname="*" />
+	</assembly>
+	<assembly fullname="Refit">
+		<type fullname="*" />
+	</assembly>
+	<assembly fullname="mscorlib">
+		<type fullname="System.DateTime">
+			<method name="AddYears"></method>
+			<method name="AddMonths"></method>
+			<method name="AddDays"></method>
+			<method name="AddHours"></method>
+			<method name="AddMinutes"></method>
+			<method name="AddSeconds"></method>
+		</type>
+	</assembly>
+
+</linker>
